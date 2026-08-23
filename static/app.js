@@ -24,6 +24,111 @@ let staticMode = false;
 let staticCourse = null;
 let staticGames = null;
 
+// Function words that make bad quiz targets.
+const SKIP_WORDS = new Set([
+    "他", "的", "了", "很", "在", "是", "也", "都", "不", "有", "和",
+    "我", "你", "这", "还", "更", "就", "又", "要", "会", "把", "给", "从", "到",
+]);
+
+// One collectible sticker per course day.
+const STICKERS = [
+    "🏝️", "❤️", "👟", "🌞", "🐶", "🌳", "⭐", "📖", "🎈", "🌌",
+    "⚽", "🚌", "🏫", "🌊", "📮", "💪", "🍚", "🌙", "🏥", "💗",
+    "😢", "🗣️", "🏃", "🥇", "✈️", "🏟️", "🥅", "👏", "🏆", "🌍",
+];
+
+const PRAISE = [
+    { zh: "太棒了！", ja: "すごい！" },
+    { zh: "你真厉害！", ja: "きみ、天才！" },
+    { zh: "进球啦！", ja: "ゴール！" },
+    { zh: "好耳朵！", ja: "いい耳だね！" },
+    { zh: "越来越好了！", ja: "どんどん上手になってる！" },
+    { zh: "了不起！", ja: "かっこいい！" },
+];
+
+function pickPraise() {
+    return PRAISE[Math.floor(Math.random() * PRAISE.length)];
+}
+
+function shuffle(list) {
+    const out = [...list];
+    for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+}
+
+function stickerFor(day) {
+    return STICKERS[(day - 1) % STICKERS.length];
+}
+
+// --- per-child word strength (which words need review) -------------------
+
+function statsKey() {
+    return "xiaoxue-stats-" + (state.child ? state.child.id : "anon");
+}
+
+function loadWordStats() {
+    try {
+        return JSON.parse(localStorage.getItem(statsKey()) || "{}") || {};
+    } catch (_) {
+        return {};
+    }
+}
+
+function bumpWordStat(zh, field) {
+    zh = String(zh || "").trim();
+    if (!zh) return;
+    const stats = loadWordStats();
+    const entry = stats[zh] || { hit: 0, miss: 0 };
+    entry[field] += 1;
+    stats[zh] = entry;
+    localStorage.setItem(statsKey(), JSON.stringify(stats));
+}
+
+const recordWordHit = (zh) => bumpWordStat(zh, "hit");
+const recordWordMiss = (zh) => bumpWordStat(zh, "miss");
+
+// --- gentle streak: counts days with a finished lesson, never scolds -----
+
+function localDateString(date) {
+    const d = date || new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function studyDaysKey() {
+    return "xiaoxue-days-" + (state.child ? state.child.id : "anon");
+}
+
+function recordStudyDay() {
+    let days = [];
+    try {
+        days = JSON.parse(localStorage.getItem(studyDaysKey()) || "[]") || [];
+    } catch (_) {}
+    const today = localDateString();
+    if (!days.includes(today)) {
+        days.push(today);
+        localStorage.setItem(studyDaysKey(), JSON.stringify(days));
+    }
+}
+
+function studyStreak() {
+    let days = [];
+    try {
+        days = JSON.parse(localStorage.getItem(studyDaysKey()) || "[]") || [];
+    } catch (_) {}
+    const set = new Set(days);
+    const cursor = new Date();
+    if (!set.has(localDateString(cursor))) cursor.setDate(cursor.getDate() - 1);
+    let streak = 0;
+    while (set.has(localDateString(cursor))) {
+        streak += 1;
+        cursor.setDate(cursor.getDate() - 1);
+    }
+    return streak;
+}
+
 const state = {
     child: null,
     children: [],
@@ -53,6 +158,8 @@ const state = {
     gameIndex: 0,
     buildPicked: [],
     courseImagesPreloaded: false,
+    warmup: [],
+    warmupIndex: 0,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -296,11 +403,24 @@ function ttsApiUrl(text) {
     return `/api/tts?voice=${encodeURIComponent(state.voice)}&text=${encodeURIComponent(text)}`;
 }
 
+function releaseTtsUrl(url) {
+    if (!url) return;
+    if (state.audio && state.audio.src === url) return;
+    try {
+        URL.revokeObjectURL(url);
+    } catch (_) {}
+}
+
 function rememberTts(key, url) {
-    if (ttsBlobs.has(key)) ttsBlobs.delete(key);
+    if (ttsBlobs.has(key)) {
+        const old = ttsBlobs.get(key);
+        ttsBlobs.delete(key);
+        if (old !== url) releaseTtsUrl(old);
+    }
     ttsBlobs.set(key, url);
     while (ttsBlobs.size > 80) {
         const oldest = ttsBlobs.keys().next().value;
+        releaseTtsUrl(ttsBlobs.get(oldest));
         ttsBlobs.delete(oldest);
     }
 }
@@ -572,7 +692,9 @@ function isUnlocked(day) {
 function renderCalendar() {
     $("calendar-title").textContent = `${state.child.avatar} ${state.child.name} の30日`;
     const done = (state.progress.completedDays || []).length;
-    $("calendar-lead").textContent = `クリア ${done} / 30日。毎日15分の物語。終わったらゲームが1つ。`;
+    const streak = studyStreak();
+    const streakNote = streak >= 2 ? `　🔥 ${streak}日つづけてがんばってるね！` : "";
+    $("calendar-lead").textContent = `クリア ${done} / 30日。毎日15分の物語。${streakNote}`;
     const grid = $("month-grid");
     grid.innerHTML = "";
     state.course.days.forEach((lesson) => {
@@ -585,7 +707,8 @@ function renderCalendar() {
         if (st && st.lessonDone) btn.classList.add("done");
         if (st && st.gameDone) btn.classList.add("played");
         btn.disabled = !unlocked;
-        btn.innerHTML = `<em>${lesson.day}</em><span>${escapeHtml(lesson.title.ja)}</span>`;
+        const mark = st && st.lessonDone ? `<i class="cell-sticker">${stickerFor(lesson.day)}</i>` : "";
+        btn.innerHTML = `<em>${lesson.day}</em><span>${escapeHtml(lesson.title.ja)}</span>${mark}`;
         btn.addEventListener("click", () => openDay(lesson.day));
         grid.appendChild(btn);
     });
@@ -598,11 +721,120 @@ async function openDay(day) {
     state.index = 0;
     state.heard = new Set(st && st.heard ? st.heard : []);
     state.seconds = st && st.seconds ? st.seconds : 0;
+    const isNewDay = !(st && st.lessonDone);
+    if (isNewDay && day > 1 && startWarmup()) return;
+    enterLesson();
+}
+
+function enterLesson() {
     renderStyles();
     renderVoices();
     renderLesson();
     showScreen("lesson");
     startTimer();
+}
+
+// --- warm-up: 3 quick review questions from already-finished days ---------
+
+function reviewableWords() {
+    const doneDays = new Set(state.progress.completedDays || []);
+    const seen = new Set();
+    const words = [];
+    (state.course.days || []).forEach((lesson) => {
+        if (!doneDays.has(lesson.day)) return;
+        (lesson.lines || []).forEach((beat) => {
+            (beat.sentence.tokens || []).forEach((token) => {
+                if (SKIP_WORDS.has(token.zh) || seen.has(token.zh) || !token.pinyin) return;
+                seen.add(token.zh);
+                words.push(token);
+            });
+        });
+    });
+    return words;
+}
+
+function startWarmup() {
+    const candidates = reviewableWords();
+    if (candidates.length < 4) return false;
+    const stats = loadWordStats();
+    const score = (token) => {
+        const entry = stats[token.zh] || { hit: 0, miss: 0 };
+        return entry.miss * 2 - entry.hit;
+    };
+    const ranked = [...candidates].sort((a, b) => score(b) - score(a));
+    const weak = ranked.slice(0, 2);
+    const rest = shuffle(candidates.filter((t) => !weak.includes(t)));
+    const picks = shuffle(weak.concat(rest).slice(0, 3));
+    state.warmup = picks.map((word) => {
+        const others = shuffle(candidates.filter((t) => t.zh !== word.zh)).slice(0, 2).map((t) => t.zh);
+        return { word, options: shuffle([word.zh, ...others]) };
+    });
+    state.warmupIndex = 0;
+    renderWarmup();
+    showScreen("warmup");
+    return true;
+}
+
+function renderWarmup() {
+    const item = state.warmup[state.warmupIndex];
+    const card = $("warmup-card");
+    if (!item) {
+        const praise = pickPraise();
+        speakChinese(praise.zh);
+        enterLesson();
+        return;
+    }
+    card.innerHTML = `<p class="practice-q">${state.warmupIndex + 1} / ${state.warmup.length}</p>
+        <button type="button" class="primary-btn big" id="warmup-play">▶ 中国語を聞く</button>
+        <p class="lead">${escapeHtml(item.word.ja || "")} はどれ？</p>
+        <div class="choice-grid" id="warmup-choices"></div>`;
+    $("warmup-play").addEventListener("click", () => speakChinese(item.word.zh));
+    speakChinese(item.word.zh);
+    const grid = $("warmup-choices");
+    item.options.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice-btn";
+        btn.textContent = opt;
+        btn.addEventListener("click", () => {
+            if (opt === item.word.zh) {
+                recordWordHit(item.word.zh);
+                state.warmupIndex += 1;
+                renderWarmup();
+            } else {
+                recordWordMiss(item.word.zh);
+                btn.classList.add("wrong");
+                speakChinese(item.word.zh);
+            }
+        });
+        grid.appendChild(btn);
+    });
+}
+
+// --- sticker album ---------------------------------------------------------
+
+function learnedWordCount() {
+    return reviewableWords().length;
+}
+
+function renderAlbum() {
+    $("album-title").textContent = `${state.child.avatar} ${state.child.name} のシールちょう`;
+    const done = (state.progress.completedDays || []).length;
+    const words = learnedWordCount();
+    const streak = studyStreak();
+    const parts = [`シール ${done} / 30`, `おぼえたことば ${words}こ`];
+    if (streak >= 2) parts.push(`🔥 ${streak}日れんぞく`);
+    $("album-lead").textContent = parts.join("　·　");
+    const grid = $("album-grid");
+    grid.innerHTML = "";
+    const doneDays = new Set(state.progress.completedDays || []);
+    state.course.days.forEach((lesson) => {
+        const cell = document.createElement("div");
+        cell.className = "sticker-cell" + (doneDays.has(lesson.day) ? " earned" : "");
+        const face = doneDays.has(lesson.day) ? stickerFor(lesson.day) : "？";
+        cell.innerHTML = `<span class="sticker-face">${face}</span><small>${lesson.day}日</small>`;
+        grid.appendChild(cell);
+    });
 }
 
 function startTimer() {
@@ -777,12 +1009,11 @@ function go(delta) {
 }
 
 function contentWords(limit) {
-    const skip = new Set(["他", "的", "了", "很", "在", "是", "也", "都", "不", "有", "和"]);
     const seen = new Set();
     const out = [];
     state.lesson.lines.forEach((beat) => {
         (beat.sentence.tokens || []).forEach((token) => {
-            if (skip.has(token.zh) || seen.has(token.zh)) return;
+            if (SKIP_WORDS.has(token.zh) || seen.has(token.zh)) return;
             seen.add(token.zh);
             out.push(token);
         });
@@ -794,12 +1025,12 @@ function openPractice() {
     stopTimer();
     const words = contentWords(4);
     const pool = contentWords(12);
-    state.practice = words.map((word, i) => {
+    state.practice = words.map((word) => {
         const options = [word.zh];
-        pool.forEach((other) => {
+        shuffle(pool).forEach((other) => {
             if (other.zh !== word.zh && options.length < 4) options.push(other.zh);
         });
-        return { word, options, answer: word.zh };
+        return { word, options: shuffle(options), answer: word.zh };
     });
     state.practiceIndex = 0;
     renderPractice();
@@ -827,9 +1058,11 @@ function renderPractice() {
         btn.textContent = opt;
         btn.addEventListener("click", () => {
             if (opt === item.answer) {
+                recordWordHit(item.word.zh);
                 state.practiceIndex += 1;
                 renderPractice();
             } else {
+                recordWordMiss(item.word.zh);
                 btn.classList.add("wrong");
                 speakChinese(item.word.zh);
             }
@@ -844,9 +1077,37 @@ async function finishLesson() {
         lessonDone: true,
         seconds: state.seconds,
     });
-    $("reward-title").textContent = `15分できた！ ${state.child.name}`;
+    recordStudyDay();
+    const praise = pickPraise();
+    $("reward-title").textContent = `${praise.ja} ${state.child.name}`;
     $("reward-moral").textContent = state.lesson.moral.ja;
+    const stickerLine = $("reward-sticker");
+    if (stickerLine) {
+        stickerLine.hidden = false;
+        stickerLine.textContent = `きょうのシール：${stickerFor(state.day)}　シールちょうにはったよ`;
+    }
     showScreen("reward");
+    burstConfetti();
+    speakChinese(praise.zh);
+}
+
+function burstConfetti() {
+    const box = $("confetti");
+    if (!box) return;
+    box.innerHTML = "";
+    const bits = ["⭐", "🎉", "⚽", "✨", "🌟"];
+    for (let i = 0; i < 18; i++) {
+        const bit = document.createElement("span");
+        bit.className = "confetti-bit";
+        bit.textContent = bits[i % bits.length];
+        bit.style.left = `${Math.random() * 100}%`;
+        bit.style.animationDelay = `${Math.random() * 0.6}s`;
+        bit.style.fontSize = `${16 + Math.random() * 18}px`;
+        box.appendChild(bit);
+    }
+    setTimeout(() => {
+        box.innerHTML = "";
+    }, 2600);
 }
 
 async function saveProgress(extra) {
@@ -914,10 +1175,13 @@ function renderGame() {
         btn.className = "choice-btn";
         btn.textContent = opt;
         btn.addEventListener("click", () => {
+            const isWordQuiz = state.game.kind === "listen-pick";
             if (i === item.answer) {
+                if (isWordQuiz) recordWordHit(item.audioZh);
                 state.gameIndex += 1;
                 renderGame();
             } else {
+                if (isWordQuiz) recordWordMiss(item.audioZh);
                 btn.classList.add("wrong");
                 speakChinese(item.audioZh || item.prompt.zh);
             }
@@ -990,8 +1254,20 @@ $("back-btn").addEventListener("click", () => {
         showScreen("calendar");
         return;
     }
+    if (state.screen === "warmup" || state.screen === "album") {
+        renderCalendar();
+        showScreen("calendar");
+        return;
+    }
     showScreen("kids");
 });
+
+$("album-btn").addEventListener("click", () => {
+    renderAlbum();
+    showScreen("album");
+});
+
+$("warmup-skip").addEventListener("click", () => enterLesson());
 
 $("child-chip").addEventListener("click", () => showScreen("kids"));
 $("sentence-card").addEventListener("click", () => {

@@ -104,13 +104,20 @@ func ListChildren() ([]Child, error) {
 	return room.Children, nil
 }
 
+// allowedAvatars matches the picker on the home screen. Anything else is
+// replaced so stored profiles can never carry markup or arbitrary strings.
+var allowedAvatars = map[string]bool{
+	"⚽": true, "🌟": true, "🐼": true, "🐶": true,
+	"🌸": true, "🔥": true, "🌈": true, "🎯": true,
+}
+
 // AddChild creates a profile another iPad can also pick.
 func AddChild(name, avatar string) (Child, error) {
 	name = trimName(name)
 	if name == "" {
 		return Child{}, fmt.Errorf("name required")
 	}
-	if avatar == "" {
+	if !allowedAvatars[avatar] {
 		avatar = "⚽"
 	}
 	child := Child{

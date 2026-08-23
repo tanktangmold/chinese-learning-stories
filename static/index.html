@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-title" content="小小中文">
     <title>小小中文 · ちいさな中国語</title>
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -72,9 +73,27 @@
             <div class="hero-mini">
                 <h1 id="calendar-title">30日のCロ物語</h1>
                 <p class="lead" id="calendar-lead">毎日15分。終わったら、ゲームが1つひらく。</p>
+                <button type="button" class="chip-btn album-open" id="album-btn">🏅 シールちょう</button>
             </div>
             <div class="week-legend">1週: 島　2週: 旅立ち　3週: 手術と努力　4週: 選手へ</div>
             <div class="month-grid" id="month-grid"></div>
+        </section>
+
+        <section class="screen" id="screen-warmup" data-screen="warmup">
+            <div class="hero-mini">
+                <h1>きのうのことば、おぼえてる？</h1>
+                <p class="lead">3もんだけ。すぐおわるよ。</p>
+            </div>
+            <div class="practice-card" id="warmup-card"></div>
+            <button type="button" class="nav-btn warmup-skip" id="warmup-skip">きょうのお話へすすむ →</button>
+        </section>
+
+        <section class="screen" id="screen-album" data-screen="album">
+            <div class="hero-mini">
+                <h1 id="album-title">シールちょう</h1>
+                <p class="lead" id="album-lead"></p>
+            </div>
+            <div class="album-grid" id="album-grid"></div>
         </section>
 
         <section class="screen" id="screen-lesson" data-screen="lesson">
@@ -119,9 +138,11 @@
 
         <section class="screen" id="screen-reward" data-screen="reward">
             <div class="reward">
+                <div class="confetti" id="confetti" aria-hidden="true"></div>
                 <p class="stamp">⚽</p>
                 <h1 id="reward-title">15分できた！</h1>
                 <p class="lead" id="reward-moral"></p>
+                <p class="sticker-earn" id="reward-sticker" hidden></p>
                 <button type="button" class="primary-btn big" id="open-game-btn">ゲームを1つプレイ</button>
                 <button type="button" class="nav-btn" id="back-calendar-btn">カレンダーへ</button>
             </div>

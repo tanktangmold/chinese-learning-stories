@@ -54,6 +54,26 @@ func TestBuildGameHasTappableItems(t *testing.T) {
 	}
 }
 
+func TestAddChildRejectsUnknownAvatar(t *testing.T) {
+	dir := t.TempDir()
+	SetClassroomPath(dir + "/classroom.json")
+
+	child, err := AddChild("ハル", "<img src=x onerror=alert(1)>")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if child.Avatar != "⚽" {
+		t.Fatalf("avatar %q should fall back to ⚽", child.Avatar)
+	}
+	ok, err := AddChild("ソラ", "🐼")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if ok.Avatar != "🐼" {
+		t.Fatalf("avatar %q should stay 🐼", ok.Avatar)
+	}
+}
+
 func TestReachableLANFilterSkipsContainerRanges(t *testing.T) {
 	cases := map[string]bool{
 		"192.168.1.20": true,
