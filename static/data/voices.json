@@ -1,0 +1,50 @@
+[
+  {
+    "id": "xiaoxiao",
+    "nameZh": "晓晓",
+    "nameJa": "女声・お姉さん",
+    "gender": "female",
+    "pitch": 1.12,
+    "rate": 0.9
+  },
+  {
+    "id": "xiaoyi",
+    "nameZh": "晓伊",
+    "nameJa": "女声・やさしい",
+    "gender": "female",
+    "pitch": 1.18,
+    "rate": 0.88
+  },
+  {
+    "id": "xiaohan",
+    "nameZh": "晓涵",
+    "nameJa": "女声・先生",
+    "gender": "female",
+    "pitch": 1.05,
+    "rate": 0.86
+  },
+  {
+    "id": "yunxi",
+    "nameZh": "云希",
+    "nameJa": "男声・少年",
+    "gender": "male",
+    "pitch": 0.88,
+    "rate": 0.92
+  },
+  {
+    "id": "yunyang",
+    "nameZh": "云扬",
+    "nameJa": "男声・お兄さん",
+    "gender": "male",
+    "pitch": 0.72,
+    "rate": 0.88
+  },
+  {
+    "id": "yunjian",
+    "nameZh": "云健",
+    "nameJa": "男声・先生",
+    "gender": "male",
+    "pitch": 0.62,
+    "rate": 0.85
+  }
+]

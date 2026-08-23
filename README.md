@@ -21,7 +21,17 @@
 - 同一台 iPad 可以换人；同一 Wi-Fi 下多台 iPad 可同时打开
 - 按钮大、可点、适合手指；可加到主屏幕当网页 App
 
-## 运行
+## 打开页面
+
+手机 / iPad 可以直接打开：
+
+**https://tanktangmold.github.io/chinese-learning-stories/**
+
+第一次需要在仓库 Settings → Pages 里启用 GitHub Pages，Source 选 **GitHub Actions**。启用后等一两分钟，上面这个地址就能打开首页。进度保存在这台设备的浏览器里。
+
+电脑上本地运行时，不要在手机里打开 `http://127.0.0.1:8080/`——那是电脑自己。终端里会打印 `Phone/iPad:` 开头的 Wi-Fi 地址，例如 `http://192.168.x.x:8080`。
+
+## 本地运行
 
 需要 [Go 1.22+](https://go.dev/dl/)。
 
@@ -34,7 +44,7 @@ go run .
 ```
 
 电脑浏览器打开 <http://127.0.0.1:8080/> 。
-iPad 请连同一 Wi-Fi，用页面上显示的局域网地址打开。
+iPad 请连同一 Wi-Fi，用终端打印的局域网地址打开。
 
 ```bash
 LISTEN_ADDR=0.0.0.0:8080 go run .

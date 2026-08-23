@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -48,6 +49,8 @@ func main() {
 	mux.Handle("/", http.FileServer(http.Dir(staticDir)))
 
 	log.Printf("小小中文 listening on http://%s", addr)
+	log.Printf("This computer: http://127.0.0.1:%s", listenPort(addr))
+	logReachableURLs(addr)
 	log.Printf("Static files: %s", staticDir)
 
 	server := &http.Server{
@@ -60,6 +63,26 @@ func main() {
 	}
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatal(err)
+	}
+}
+
+func listenPort(addr string) string {
+	_, port, err := net.SplitHostPort(addr)
+	if err != nil || port == "" {
+		return "8080"
+	}
+	return port
+}
+
+func logReachableURLs(addr string) {
+	port := listenPort(addr)
+	urls := learn.LANURLs(port)
+	if len(urls) == 0 {
+		log.Printf("No phone-reachable Wi-Fi IP found. On iPad open this computer's Wi-Fi IPv4, for example http://192.168.x.x:%s", port)
+		return
+	}
+	for _, url := range urls {
+		log.Printf("Phone/iPad: %s", url)
 	}
 }
 

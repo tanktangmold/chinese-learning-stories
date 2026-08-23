@@ -10,6 +10,19 @@ const SCENE_ALIAS = {
 const AVATARS = ["⚽", "🌟", "🐼", "🐶", "🌸", "🔥", "🌈", "🎯"];
 const IMAGE_STYLES = ["comic", "picturebook", "realistic"];
 const IMAGE_VERSION = "local-svg-v3";
+const CLASSROOM_KEY = "xiaoxue-classroom";
+const STATIC_VOICES = [
+    { id: "xiaoxiao", nameZh: "晓晓", nameJa: "女声・お姉さん", gender: "female", pitch: 1.12, rate: 0.9 },
+    { id: "xiaoyi", nameZh: "晓伊", nameJa: "女声・やさしい", gender: "female", pitch: 1.18, rate: 0.88 },
+    { id: "xiaohan", nameZh: "晓涵", nameJa: "女声・先生", gender: "female", pitch: 1.05, rate: 0.86 },
+    { id: "yunxi", nameZh: "云希", nameJa: "男声・少年", gender: "male", pitch: 0.88, rate: 0.92 },
+    { id: "yunyang", nameZh: "云扬", nameJa: "男声・お兄さん", gender: "male", pitch: 0.72, rate: 0.88 },
+    { id: "yunjian", nameZh: "云健", nameJa: "男声・先生", gender: "male", pitch: 0.62, rate: 0.85 },
+];
+
+let staticMode = false;
+let staticCourse = null;
+let staticGames = null;
 
 const state = {
     child: null,
@@ -66,11 +79,161 @@ function sceneUrl(style, scene) {
 }
 
 function lineImageUrl(day, line, style) {
+    if (staticMode) {
+        const lesson = staticCourse && staticCourse.days[day - 1];
+        const beat = lesson && lesson.lines[line];
+        return sceneUrl(style, (beat && beat.scene) || (lesson && lesson.scene));
+    }
     return `/api/image?day=${day}&line=${line}&style=${encodeURIComponent(style)}&v=${IMAGE_VERSION}`;
 }
 
+function loadClassroom() {
+    try {
+        const parsed = JSON.parse(localStorage.getItem(CLASSROOM_KEY) || "");
+        if (parsed && Array.isArray(parsed.children) && parsed.progress && typeof parsed.progress === "object") {
+            return parsed;
+        }
+    } catch (_) {}
+    return { children: [], progress: {} };
+}
+
+function saveClassroom(room) {
+    localStorage.setItem(CLASSROOM_KEY, JSON.stringify(room));
+}
+
+function emptyProgress(childId) {
+    return { childId, currentDay: 1, completedDays: [], days: {} };
+}
+
+function addLocalChild(name, avatar) {
+    name = String(name || "").replace(/\s+/g, "").slice(0, 12);
+    if (!name) throw new Error("name required");
+    if (!AVATARS.includes(avatar)) avatar = "⚽";
+    const child = {
+        id: "c" + Date.now().toString(16),
+        name,
+        avatar,
+        createdAt: new Date().toISOString(),
+    };
+    const room = loadClassroom();
+    room.children.push(child);
+    room.progress[child.id] = emptyProgress(child.id);
+    saveClassroom(room);
+    return child;
+}
+
+function getLocalProgress(childId) {
+    const room = loadClassroom();
+    const progress = room.progress[childId];
+    if (!progress) throw new Error("child not found");
+    if (!progress.days) progress.days = {};
+    if (!progress.completedDays) progress.completedDays = [];
+    if (!progress.currentDay) progress.currentDay = 1;
+    return progress;
+}
+
+function applyLocalProgress(childId, patch) {
+    const day = Number(patch.day || 0);
+    if (day < 1 || day > 30) throw new Error("day must be 1-30");
+    const room = loadClassroom();
+    const progress = room.progress[childId];
+    if (!progress) throw new Error("child not found");
+    if (!progress.days) progress.days = {};
+    if (!progress.completedDays) progress.completedDays = [];
+    if (day > 1) {
+        const prev = progress.days[String(day - 1)];
+        if (!prev || !prev.lessonDone) throw new Error("day " + day + " is locked");
+    }
+    const key = String(day);
+    const dayState = progress.days[key] || { heard: [], lessonDone: false, gameDone: false, seconds: 0 };
+    if (Array.isArray(patch.heard) && patch.heard.length) {
+        dayState.heard = [...new Set([...(dayState.heard || []), ...patch.heard])];
+    }
+    if (Number(patch.seconds || 0) > (dayState.seconds || 0)) {
+        dayState.seconds = Number(patch.seconds);
+    }
+    if (patch.lessonDone) {
+        dayState.lessonDone = true;
+        progress.completedDays = [...new Set([...(progress.completedDays || []), day])];
+        if (day < 30 && (progress.currentDay || 1) < day + 1) progress.currentDay = day + 1;
+        if (day === 30) progress.currentDay = 30;
+    }
+    if (patch.gameDone) {
+        if (!dayState.lessonDone) throw new Error("finish today's 15-minute lesson first");
+        dayState.gameDone = true;
+    }
+    progress.days[key] = dayState;
+    room.progress[childId] = progress;
+    saveClassroom(room);
+    return progress;
+}
+
+async function ensureStaticData() {
+    if (staticCourse && staticGames) return;
+    const [courseRes, gamesRes] = await Promise.all([
+        fetch("data/course.json"),
+        fetch("data/games.json"),
+    ]);
+    if (!courseRes.ok || !gamesRes.ok) {
+        throw new Error("static course data missing");
+    }
+    staticCourse = await courseRes.json();
+    staticGames = await gamesRes.json();
+}
+
+async function fetchApi(url, opts) {
+    const res = await fetch(url, opts);
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.detail || "error");
+    return data;
+}
+
+function staticApi(url, opts) {
+    const method = ((opts && opts.method) || "GET").toUpperCase();
+    const parsed = new URL(url, "http://local.invalid");
+    const path = parsed.pathname.replace(/\/+$/, "") || "/";
+    if (path === "/api/children" && method === "GET") {
+        return loadClassroom().children;
+    }
+    if (path === "/api/children" && method === "POST") {
+        const body = JSON.parse((opts && opts.body) || "{}");
+        return addLocalChild(body.name, body.avatar);
+    }
+    const progressMatch = path.match(/^\/api\/children\/([^/]+)\/progress$/);
+    if (progressMatch && method === "GET") {
+        return getLocalProgress(decodeURIComponent(progressMatch[1]));
+    }
+    if (progressMatch && method === "POST") {
+        const body = JSON.parse((opts && opts.body) || "{}");
+        return applyLocalProgress(decodeURIComponent(progressMatch[1]), body);
+    }
+    if (path === "/api/course" && method === "GET") {
+        return staticCourse;
+    }
+    const dayMatch = path.match(/^\/api\/course\/day\/(\d+)$/);
+    if (dayMatch && method === "GET") {
+        const lesson = staticCourse.days[Number(dayMatch[1]) - 1];
+        if (!lesson) throw new Error("day not found");
+        return lesson;
+    }
+    const gameMatch = path.match(/^\/api\/game\/(\d+)$/);
+    if (gameMatch && method === "GET") {
+        const day = Number(gameMatch[1]);
+        const childID = parsed.searchParams.get("child");
+        if (childID) {
+            const progress = getLocalProgress(childID);
+            const st = progress.days[String(day)];
+            if (!st || !st.lessonDone) throw new Error("finish the 15-minute lesson first");
+        }
+        const game = (staticGames || []).find((item) => item.day === day);
+        if (!game) throw new Error("day not found");
+        return game;
+    }
+    throw new Error("offline api missing");
+}
+
 function preloadCourseImages() {
-    if (!state.course || state.courseImagesPreloaded) return;
+    if (staticMode || !state.course || state.courseImagesPreloaded) return;
     state.courseImagesPreloaded = true;
     const urls = [];
     state.course.days.forEach((lesson) => {
@@ -294,6 +457,10 @@ function speakChinese(text, onend, opts) {
         return;
     }
     const cached = ttsBlobs.get(ttsKey(text));
+    if (staticMode) {
+        speakWeb(text, finish, profile, seq);
+        return;
+    }
     playAudioSrc(cached || ttsApiUrl(text), text, finish, profile, seq);
     if (!cached) fetchTtsBlob(text).catch(() => {});
 }
@@ -305,16 +472,31 @@ function markHeard(index) {
 }
 
 async function api(url, opts) {
-    const res = await fetch(url, opts);
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.detail || "error");
-    return data;
+    if (staticMode) return staticApi(url, opts);
+    return fetchApi(url, opts);
 }
 
 async function loadKids() {
-    state.children = await api("/api/children");
-    state.info = await api("/api/server-info").catch(() => null);
-    state.voices = await api("/api/voices").catch(() => []);
+    if (!staticMode) {
+        try {
+            state.children = await fetchApi("/api/children");
+            state.info = await fetchApi("/api/server-info").catch(() => null);
+            state.voices = await fetchApi("/api/voices").catch(() => STATIC_VOICES);
+            renderKids();
+            renderVoices();
+            return;
+        } catch (_) {
+            staticMode = true;
+        }
+    }
+    await ensureStaticData();
+    state.children = loadClassroom().children;
+    state.voices = STATIC_VOICES;
+    state.info = {
+        hintJa: "このページはブラウザだけで開けるよ。進みはこの端末に保存されるよ。",
+        hintZh: "手机可以直接打开。进度保存在这台设备上。",
+        lanUrls: [location.href.split("#")[0]],
+    };
     renderKids();
     renderVoices();
 }
@@ -327,9 +509,17 @@ function renderKids() {
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "kid-card" + (child.id === last ? " last-child" : "");
-        btn.innerHTML = `<span class="kid-face">${child.avatar}</span><strong>${escapeHtml(child.name)}</strong>${
-            child.id === last ? `<small>前回</small>` : ""
-        }`;
+        const face = document.createElement("span");
+        face.className = "kid-face";
+        face.textContent = AVATARS.includes(child.avatar) ? child.avatar : "⚽";
+        const name = document.createElement("strong");
+        name.textContent = child.name;
+        btn.append(face, name);
+        if (child.id === last) {
+            const mark = document.createElement("small");
+            mark.textContent = "前回";
+            btn.append(mark);
+        }
         btn.addEventListener("click", () => selectChild(child));
         grid.appendChild(btn);
     });
@@ -839,6 +1029,7 @@ if (window.speechSynthesis) {
     speechSynthesis.addEventListener("voiceschanged", () => pickChineseVoice());
 }
 
-loadKids().catch(() => {
-    $("lan-hint").textContent = "サーバーに接続できなかったよ。xiaoxue-zhongwen で go run . してね。";
+loadKids().catch((err) => {
+    $("lan-hint").textContent = "ページを開けなかったよ。パソコンで go run . するか、GitHub Pages を有効にしてね。";
+    console.error(err);
 });
