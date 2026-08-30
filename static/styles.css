@@ -17,6 +17,8 @@
 html, body {
     margin: 0;
     min-height: 100%;
+    min-height: 100dvh;
+    touch-action: manipulation;
     background:
         radial-gradient(1200px 420px at 50% -80px, var(--sky) 0%, transparent 70%),
         linear-gradient(#d9f0c7 0%, var(--paper) 38%, var(--paper) 100%);
@@ -75,6 +77,10 @@ body {
 }
 
 .top-actions { margin-left: auto; }
+
+button, a, input {
+    touch-action: manipulation;
+}
 
 .icon-btn, .chip-btn, .primary-btn, .nav-btn, .story-card, .interest-chip {
     font: inherit;
@@ -835,11 +841,55 @@ html {
     font-size: 18px;
 }
 
-.album-open {
+.calendar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-top: 10px;
+}
+
+.album-open {
     background: var(--sun);
     font-weight: 800;
     padding: 0 16px;
+}
+
+.install-card {
+    background: #fff7d6;
+}
+
+.report-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.report-card {
+    background: #fffdf8;
+    border: 3px solid var(--ink);
+    border-radius: 18px;
+    padding: 14px;
+}
+
+.report-card h2 {
+    margin: 0 0 6px;
+    font-size: 14px;
+}
+
+.report-card p {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.report-card.wide {
+    grid-column: 1 / -1;
+}
+
+.report-card.wide p {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
 }
 
 .album-grid {

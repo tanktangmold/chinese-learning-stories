@@ -10,6 +10,7 @@
     <title>小小中文 · ちいさな中国語</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -67,13 +68,17 @@
                 </form>
             </div>
             <p class="muted lan-card" id="lan-hint"></p>
+            <p class="muted lan-card install-card" id="install-hint">iPad：右上の共有ボタン →「ホーム画面に追加」。电脑不要开着也能学。</p>
         </section>
 
         <section class="screen" id="screen-calendar" data-screen="calendar">
             <div class="hero-mini">
                 <h1 id="calendar-title">30日のCロ物語</h1>
                 <p class="lead" id="calendar-lead">毎日15分。終わったら、ゲームが1つひらく。</p>
-                <button type="button" class="chip-btn album-open" id="album-btn">🏅 シールちょう</button>
+                <div class="calendar-actions">
+                    <button type="button" class="chip-btn album-open" id="album-btn">🏅 シールちょう</button>
+                    <button type="button" class="chip-btn album-open" id="report-btn">👪 保護者メモ</button>
+                </div>
             </div>
             <div class="week-legend">1週: 島　2週: 旅立ち　3週: 手術と努力　4週: 選手へ</div>
             <div class="month-grid" id="month-grid"></div>
@@ -86,6 +91,14 @@
             </div>
             <div class="practice-card" id="warmup-card"></div>
             <button type="button" class="nav-btn warmup-skip" id="warmup-skip">きょうのお話へすすむ →</button>
+        </section>
+
+        <section class="screen" id="screen-report" data-screen="report">
+            <div class="hero-mini">
+                <h1 id="report-title">保護者メモ</h1>
+                <p class="lead" id="report-lead">今週のようす。子どもには見せなくても大丈夫。</p>
+            </div>
+            <div class="report-grid" id="report-grid"></div>
         </section>
 
         <section class="screen" id="screen-album" data-screen="album">

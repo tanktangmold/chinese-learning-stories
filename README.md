@@ -30,15 +30,19 @@
 - 同一台 iPad 可以换人；同一 Wi-Fi 下多台 iPad 可同时打开
 - 按钮大、可点、适合手指；可加到主屏幕当网页 App
 
-## 打开页面
+## 平板上怎么用（不用开电脑）
 
-手机 / iPad 可以直接打开：
+平板浏览器打开这一页即可，进度保存在这台平板上：
+
+**https://raw.githack.com/tanktangmold/chinese-learning-stories/cursor/import-xiaoxue-zhongwen-a877/static/index.html**
+
+iPad：打开后点右上角 **分享** → **添加到主屏幕**。以后像普通 App 一样点图标就能学，电脑不用开。
+
+长期固定地址（合并 PR 并在仓库 Settings → Pages 里把 Source 设为 GitHub Actions 之后）：
 
 **https://tanktangmold.github.io/chinese-learning-stories/**
 
-第一次需要在仓库 Settings → Pages 里启用 GitHub Pages，Source 选 **GitHub Actions**。启用后等一两分钟，上面这个地址就能打开首页。进度保存在这台设备的浏览器里。
-
-电脑上本地运行时，不要在手机里打开 `http://127.0.0.1:8080/`——那是电脑自己。终端里会打印 `Phone/iPad:` 开头的 Wi-Fi 地址，例如 `http://192.168.x.x:8080`。
+电脑上本地 `go run .` 时，平板不要打开 `http://127.0.0.1:8080/`。用终端里 `Phone/iPad:` 那一行。
 
 ## 本地运行
 

@@ -614,11 +614,24 @@ async function loadKids() {
     state.voices = STATIC_VOICES;
     state.info = {
         hintJa: "このページはブラウザだけで開けるよ。進みはこの端末に保存されるよ。",
-        hintZh: "手机可以直接打开。进度保存在这台设备上。",
+        hintZh: "平板可以直接打开。进度保存在这台设备上，不用开电脑。",
         lanUrls: [location.href.split("#")[0]],
     };
     renderKids();
     renderVoices();
+}
+
+function isStandaloneApp() {
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+
+function setupTabletChrome() {
+    const hint = $("install-hint");
+    if (hint) hint.hidden = isStandaloneApp();
+    if (!("serviceWorker" in navigator)) return;
+    const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    if (location.protocol !== "https:" && !local) return;
+    navigator.serviceWorker.register("sw.js").catch(() => {});
 }
 
 function renderKids() {
@@ -815,6 +828,32 @@ function renderWarmup() {
 
 function learnedWordCount() {
     return reviewableWords().length;
+}
+
+function renderReport() {
+    $("report-title").textContent = `${state.child.avatar} ${state.child.name} の保護者メモ`;
+    const done = state.progress.completedDays || [];
+    const words = reviewableWords();
+    const stats = loadWordStats();
+    const weak = words
+        .map((token) => {
+            const entry = stats[token.zh] || { hit: 0, miss: 0 };
+            return { token, miss: entry.miss, hit: entry.hit, score: entry.miss * 2 - entry.hit };
+        })
+        .filter((row) => row.miss > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 6);
+    const streak = studyStreak();
+    const grid = $("report-grid");
+    const weakLine = weak.length
+        ? weak.map((row) => `${row.token.zh}（${row.token.ja || row.token.pinyin}）`).join("、")
+        : "まだ苦手な語は記録されていません。";
+    grid.innerHTML = `
+        <article class="report-card"><h2>クリアした日</h2><p>${done.length} / 30日</p></article>
+        <article class="report-card"><h2>おぼえたことば</h2><p>${words.length}こ</p></article>
+        <article class="report-card"><h2>れんぞく</h2><p>${streak >= 2 ? streak + "日" : "まだこれから"}</p></article>
+        <article class="report-card wide"><h2>もう一度聞きたい語</h2><p>${escapeHtml(weakLine)}</p></article>
+        <p class="muted">このメモは親向けです。子どもが答えを間違えても減点しません。</p>`;
 }
 
 function renderAlbum() {
@@ -1254,7 +1293,7 @@ $("back-btn").addEventListener("click", () => {
         showScreen("calendar");
         return;
     }
-    if (state.screen === "warmup" || state.screen === "album") {
+    if (state.screen === "warmup" || state.screen === "album" || state.screen === "report") {
         renderCalendar();
         showScreen("calendar");
         return;
@@ -1265,6 +1304,11 @@ $("back-btn").addEventListener("click", () => {
 $("album-btn").addEventListener("click", () => {
     renderAlbum();
     showScreen("album");
+});
+
+$("report-btn").addEventListener("click", () => {
+    renderReport();
+    showScreen("report");
 });
 
 $("warmup-skip").addEventListener("click", () => enterLesson());
@@ -1305,7 +1349,8 @@ if (window.speechSynthesis) {
     speechSynthesis.addEventListener("voiceschanged", () => pickChineseVoice());
 }
 
+setupTabletChrome();
 loadKids().catch((err) => {
-    $("lan-hint").textContent = "ページを開けなかったよ。パソコンで go run . するか、GitHub Pages を有効にしてね。";
+    $("lan-hint").textContent = "ページを開けなかったよ。下のタブレット用リンクを開いてね。";
     console.error(err);
 });
