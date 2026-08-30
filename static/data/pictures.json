@@ -1,0 +1,1682 @@
+[
+  {
+    "day": 1,
+    "line": 0,
+    "zh": "这是罗纳尔多。",
+    "file": "pictures/d01-l01.svg",
+    "shot": "hello"
+  },
+  {
+    "day": 1,
+    "line": 1,
+    "zh": "大家都叫他C罗。",
+    "file": "pictures/d01-l02.svg",
+    "shot": "nickname"
+  },
+  {
+    "day": 1,
+    "line": 2,
+    "zh": "他住在小岛上。",
+    "file": "pictures/d01-l03.svg",
+    "shot": "island"
+  },
+  {
+    "day": 1,
+    "line": 3,
+    "zh": "岛在葡萄牙。",
+    "file": "pictures/d01-l04.svg",
+    "shot": "portugal"
+  },
+  {
+    "day": 1,
+    "line": 4,
+    "zh": "他的家很小。",
+    "file": "pictures/d01-l05.svg",
+    "shot": "tinyhouse"
+  },
+  {
+    "day": 1,
+    "line": 5,
+    "zh": "家里人很多。",
+    "file": "pictures/d01-l06.svg",
+    "shot": "crowd"
+  },
+  {
+    "day": 1,
+    "line": 6,
+    "zh": "他有一个足球梦。",
+    "file": "pictures/d01-l07.svg",
+    "shot": "dream"
+  },
+  {
+    "day": 1,
+    "line": 7,
+    "zh": "梦想很大。",
+    "file": "pictures/d01-l08.svg",
+    "shot": "dreambig"
+  },
+  {
+    "day": 2,
+    "line": 0,
+    "zh": "他的爸爸很忙。",
+    "file": "pictures/d02-l01.svg",
+    "shot": "dadbusy"
+  },
+  {
+    "day": 2,
+    "line": 1,
+    "zh": "他的妈妈很辛苦。",
+    "file": "pictures/d02-l02.svg",
+    "shot": "mom"
+  },
+  {
+    "day": 2,
+    "line": 2,
+    "zh": "家里钱不多。",
+    "file": "pictures/d02-l03.svg",
+    "shot": "poor"
+  },
+  {
+    "day": 2,
+    "line": 3,
+    "zh": "可是家里有爱。",
+    "file": "pictures/d02-l04.svg",
+    "shot": "love"
+  },
+  {
+    "day": 2,
+    "line": 4,
+    "zh": "他爱他的家。",
+    "file": "pictures/d02-l05.svg",
+    "shot": "lovehome"
+  },
+  {
+    "day": 2,
+    "line": 5,
+    "zh": "他想让家里高兴。",
+    "file": "pictures/d02-l06.svg",
+    "shot": "makehappy"
+  },
+  {
+    "day": 2,
+    "line": 6,
+    "zh": "所以他很努力。",
+    "file": "pictures/d02-l07.svg",
+    "shot": "effort"
+  },
+  {
+    "day": 2,
+    "line": 7,
+    "zh": "爱给了他力量。",
+    "file": "pictures/d02-l08.svg",
+    "shot": "lovepower"
+  },
+  {
+    "day": 3,
+    "line": 0,
+    "zh": "他三岁开始踢足球。",
+    "file": "pictures/d03-l01.svg",
+    "shot": "toddler"
+  },
+  {
+    "day": 3,
+    "line": 1,
+    "zh": "他和哥哥一起玩。",
+    "file": "pictures/d03-l02.svg",
+    "shot": "brothers"
+  },
+  {
+    "day": 3,
+    "line": 2,
+    "zh": "球是旧的。",
+    "file": "pictures/d03-l03.svg",
+    "shot": "oldball"
+  },
+  {
+    "day": 3,
+    "line": 3,
+    "zh": "他天天踢球。",
+    "file": "pictures/d03-l04.svg",
+    "shot": "kick"
+  },
+  {
+    "day": 3,
+    "line": 4,
+    "zh": "他笑得很开心。",
+    "file": "pictures/d03-l05.svg",
+    "shot": "happy"
+  },
+  {
+    "day": 3,
+    "line": 5,
+    "zh": "足球让他高兴。",
+    "file": "pictures/d03-l06.svg",
+    "shot": "happyball"
+  },
+  {
+    "day": 3,
+    "line": 6,
+    "zh": "第一脚很小。",
+    "file": "pictures/d03-l07.svg",
+    "shot": "firstkick"
+  },
+  {
+    "day": 3,
+    "line": 7,
+    "zh": "可是梦开始了。",
+    "file": "pictures/d03-l08.svg",
+    "shot": "dreamstart"
+  },
+  {
+    "day": 4,
+    "line": 0,
+    "zh": "他天天在街上踢球。",
+    "file": "pictures/d04-l01.svg",
+    "shot": "streetkick"
+  },
+  {
+    "day": 4,
+    "line": 1,
+    "zh": "路很小。",
+    "file": "pictures/d04-l02.svg",
+    "shot": "narrow"
+  },
+  {
+    "day": 4,
+    "line": 2,
+    "zh": "他跑得很快。",
+    "file": "pictures/d04-l03.svg",
+    "shot": "run"
+  },
+  {
+    "day": 4,
+    "line": 3,
+    "zh": "邻居都看见他。",
+    "file": "pictures/d04-l04.svg",
+    "shot": "neighbors"
+  },
+  {
+    "day": 4,
+    "line": 4,
+    "zh": "天黑了他还跑。",
+    "file": "pictures/d04-l05.svg",
+    "shot": "nightrun"
+  },
+  {
+    "day": 4,
+    "line": 5,
+    "zh": "别人回家了。",
+    "file": "pictures/d04-l06.svg",
+    "shot": "othershome"
+  },
+  {
+    "day": 4,
+    "line": 6,
+    "zh": "他还在踢球。",
+    "file": "pictures/d04-l07.svg",
+    "shot": "alonekick"
+  },
+  {
+    "day": 4,
+    "line": 7,
+    "zh": "他不怕累。",
+    "file": "pictures/d04-l08.svg",
+    "shot": "notired"
+  },
+  {
+    "day": 5,
+    "line": 0,
+    "zh": "他加入了球队。",
+    "file": "pictures/d05-l01.svg",
+    "shot": "team"
+  },
+  {
+    "day": 5,
+    "line": 1,
+    "zh": "爸爸在那里工作。",
+    "file": "pictures/d05-l02.svg",
+    "shot": "dadclub"
+  },
+  {
+    "day": 5,
+    "line": 2,
+    "zh": "他很小。",
+    "file": "pictures/d05-l03.svg",
+    "shot": "smallboy"
+  },
+  {
+    "day": 5,
+    "line": 3,
+    "zh": "可是他很认真。",
+    "file": "pictures/d05-l04.svg",
+    "shot": "serious"
+  },
+  {
+    "day": 5,
+    "line": 4,
+    "zh": "教练看见他。",
+    "file": "pictures/d05-l05.svg",
+    "shot": "coachsee"
+  },
+  {
+    "day": 5,
+    "line": 5,
+    "zh": "教练说他很快。",
+    "file": "pictures/d05-l06.svg",
+    "shot": "coachfast"
+  },
+  {
+    "day": 5,
+    "line": 6,
+    "zh": "他天天训练。",
+    "file": "pictures/d05-l07.svg",
+    "shot": "train"
+  },
+  {
+    "day": 5,
+    "line": 7,
+    "zh": "球队成了他的家。",
+    "file": "pictures/d05-l08.svg",
+    "shot": "teamhome"
+  },
+  {
+    "day": 6,
+    "line": 0,
+    "zh": "别人回家了。",
+    "file": "pictures/d06-l01.svg",
+    "shot": "othershome"
+  },
+  {
+    "day": 6,
+    "line": 1,
+    "zh": "他还在训练。",
+    "file": "pictures/d06-l02.svg",
+    "shot": "trainnight"
+  },
+  {
+    "day": 6,
+    "line": 2,
+    "zh": "他是最后一个走。",
+    "file": "pictures/d06-l03.svg",
+    "shot": "last"
+  },
+  {
+    "day": 6,
+    "line": 3,
+    "zh": "他也是第一个来。",
+    "file": "pictures/d06-l04.svg",
+    "shot": "first"
+  },
+  {
+    "day": 6,
+    "line": 4,
+    "zh": "汗很多。",
+    "file": "pictures/d06-l05.svg",
+    "shot": "sweat"
+  },
+  {
+    "day": 6,
+    "line": 5,
+    "zh": "他不怕辛苦。",
+    "file": "pictures/d06-l06.svg",
+    "shot": "notired"
+  },
+  {
+    "day": 6,
+    "line": 6,
+    "zh": "努力成了习惯。",
+    "file": "pictures/d06-l07.svg",
+    "shot": "habit"
+  },
+  {
+    "day": 6,
+    "line": 7,
+    "zh": "这就是C罗。",
+    "file": "pictures/d06-l08.svg",
+    "shot": "portrait"
+  },
+  {
+    "day": 7,
+    "line": 0,
+    "zh": "今天我们复习。",
+    "file": "pictures/d07-l01.svg",
+    "shot": "review"
+  },
+  {
+    "day": 7,
+    "line": 1,
+    "zh": "C罗住在小岛上。",
+    "file": "pictures/d07-l02.svg",
+    "shot": "island"
+  },
+  {
+    "day": 7,
+    "line": 2,
+    "zh": "家里钱不多。",
+    "file": "pictures/d07-l03.svg",
+    "shot": "poor"
+  },
+  {
+    "day": 7,
+    "line": 3,
+    "zh": "可是家里有爱。",
+    "file": "pictures/d07-l04.svg",
+    "shot": "love"
+  },
+  {
+    "day": 7,
+    "line": 4,
+    "zh": "他三岁开始踢足球。",
+    "file": "pictures/d07-l05.svg",
+    "shot": "toddler"
+  },
+  {
+    "day": 7,
+    "line": 5,
+    "zh": "他天天很努力。",
+    "file": "pictures/d07-l06.svg",
+    "shot": "effort"
+  },
+  {
+    "day": 7,
+    "line": 6,
+    "zh": "他有一个足球梦。",
+    "file": "pictures/d07-l07.svg",
+    "shot": "dream"
+  },
+  {
+    "day": 7,
+    "line": 7,
+    "zh": "梦想给他力量。",
+    "file": "pictures/d07-l08.svg",
+    "shot": "dreampower"
+  },
+  {
+    "day": 8,
+    "line": 0,
+    "zh": "他十岁了。",
+    "file": "pictures/d08-l01.svg",
+    "shot": "age10"
+  },
+  {
+    "day": 8,
+    "line": 1,
+    "zh": "他去了更大的球队。",
+    "file": "pictures/d08-l02.svg",
+    "shot": "bigteam"
+  },
+  {
+    "day": 8,
+    "line": 2,
+    "zh": "他进步很快。",
+    "file": "pictures/d08-l03.svg",
+    "shot": "progress"
+  },
+  {
+    "day": 8,
+    "line": 3,
+    "zh": "教练喜欢他。",
+    "file": "pictures/d08-l04.svg",
+    "shot": "coachlike"
+  },
+  {
+    "day": 8,
+    "line": 4,
+    "zh": "因为他很努力。",
+    "file": "pictures/d08-l05.svg",
+    "shot": "effort"
+  },
+  {
+    "day": 8,
+    "line": 5,
+    "zh": "球越来越好。",
+    "file": "pictures/d08-l06.svg",
+    "shot": "betterball"
+  },
+  {
+    "day": 8,
+    "line": 6,
+    "zh": "他会过人。",
+    "file": "pictures/d08-l07.svg",
+    "shot": "dribble"
+  },
+  {
+    "day": 8,
+    "line": 7,
+    "zh": "更大的梦来了。",
+    "file": "pictures/d08-l08.svg",
+    "shot": "dreambig"
+  },
+  {
+    "day": 9,
+    "line": 0,
+    "zh": "他十二岁了。",
+    "file": "pictures/d09-l01.svg",
+    "shot": "age12"
+  },
+  {
+    "day": 9,
+    "line": 1,
+    "zh": "他离开了家。",
+    "file": "pictures/d09-l02.svg",
+    "shot": "goodbye"
+  },
+  {
+    "day": 9,
+    "line": 2,
+    "zh": "他去里斯本。",
+    "file": "pictures/d09-l03.svg",
+    "shot": "golisbon"
+  },
+  {
+    "day": 9,
+    "line": 3,
+    "zh": "里斯本很大。",
+    "file": "pictures/d09-l04.svg",
+    "shot": "lisbon"
+  },
+  {
+    "day": 9,
+    "line": 4,
+    "zh": "他想家。",
+    "file": "pictures/d09-l05.svg",
+    "shot": "homesick"
+  },
+  {
+    "day": 9,
+    "line": 5,
+    "zh": "他哭了。",
+    "file": "pictures/d09-l06.svg",
+    "shot": "cry"
+  },
+  {
+    "day": 9,
+    "line": 6,
+    "zh": "离开家很难。",
+    "file": "pictures/d09-l07.svg",
+    "shot": "goodbyehard"
+  },
+  {
+    "day": 9,
+    "line": 7,
+    "zh": "可是他不放弃。",
+    "file": "pictures/d09-l08.svg",
+    "shot": "nogiveup"
+  },
+  {
+    "day": 10,
+    "line": 0,
+    "zh": "同学笑他的口音。",
+    "file": "pictures/d10-l01.svg",
+    "shot": "tease"
+  },
+  {
+    "day": 10,
+    "line": 1,
+    "zh": "他很难过。",
+    "file": "pictures/d10-l02.svg",
+    "shot": "sad"
+  },
+  {
+    "day": 10,
+    "line": 2,
+    "zh": "他想回家。",
+    "file": "pictures/d10-l03.svg",
+    "shot": "wanthome"
+  },
+  {
+    "day": 10,
+    "line": 3,
+    "zh": "可是他没有走。",
+    "file": "pictures/d10-l04.svg",
+    "shot": "stayed"
+  },
+  {
+    "day": 10,
+    "line": 4,
+    "zh": "他把话变成力量。",
+    "file": "pictures/d10-l05.svg",
+    "shot": "wordpower"
+  },
+  {
+    "day": 10,
+    "line": 5,
+    "zh": "他更努力。",
+    "file": "pictures/d10-l06.svg",
+    "shot": "effort"
+  },
+  {
+    "day": 10,
+    "line": 6,
+    "zh": "足球是他的朋友。",
+    "file": "pictures/d10-l07.svg",
+    "shot": "ballfriend"
+  },
+  {
+    "day": 10,
+    "line": 7,
+    "zh": "他不放弃。",
+    "file": "pictures/d10-l08.svg",
+    "shot": "nogiveup"
+  },
+  {
+    "day": 11,
+    "line": 0,
+    "zh": "他一个人住学校。",
+    "file": "pictures/d11-l01.svg",
+    "shot": "school"
+  },
+  {
+    "day": 11,
+    "line": 1,
+    "zh": "晚上他想妈妈。",
+    "file": "pictures/d11-l02.svg",
+    "shot": "nightmom"
+  },
+  {
+    "day": 11,
+    "line": 2,
+    "zh": "白天他踢球。",
+    "file": "pictures/d11-l03.svg",
+    "shot": "kick"
+  },
+  {
+    "day": 11,
+    "line": 3,
+    "zh": "足球是好朋友。",
+    "file": "pictures/d11-l04.svg",
+    "shot": "ballfriend"
+  },
+  {
+    "day": 11,
+    "line": 4,
+    "zh": "他给家里打电话。",
+    "file": "pictures/d11-l05.svg",
+    "shot": "phone"
+  },
+  {
+    "day": 11,
+    "line": 5,
+    "zh": "他说我会努力。",
+    "file": "pictures/d11-l06.svg",
+    "shot": "sayeffort"
+  },
+  {
+    "day": 11,
+    "line": 6,
+    "zh": "妈妈说我们爱你。",
+    "file": "pictures/d11-l07.svg",
+    "shot": "momlove"
+  },
+  {
+    "day": 11,
+    "line": 7,
+    "zh": "爱让他站起来。",
+    "file": "pictures/d11-l08.svg",
+    "shot": "lovestand"
+  },
+  {
+    "day": 12,
+    "line": 0,
+    "zh": "他更瘦了。",
+    "file": "pictures/d12-l01.svg",
+    "shot": "thin"
+  },
+  {
+    "day": 12,
+    "line": 1,
+    "zh": "他跑得更快。",
+    "file": "pictures/d12-l02.svg",
+    "shot": "run"
+  },
+  {
+    "day": 12,
+    "line": 2,
+    "zh": "他用两只脚踢球。",
+    "file": "pictures/d12-l03.svg",
+    "shot": "twofeet"
+  },
+  {
+    "day": 12,
+    "line": 3,
+    "zh": "夜里他还想球。",
+    "file": "pictures/d12-l04.svg",
+    "shot": "nightball"
+  },
+  {
+    "day": 12,
+    "line": 4,
+    "zh": "技术越来越好。",
+    "file": "pictures/d12-l05.svg",
+    "shot": "progress"
+  },
+  {
+    "day": 12,
+    "line": 5,
+    "zh": "他会射门。",
+    "file": "pictures/d12-l06.svg",
+    "shot": "shoot"
+  },
+  {
+    "day": 12,
+    "line": 6,
+    "zh": "他会过人。",
+    "file": "pictures/d12-l07.svg",
+    "shot": "dribble"
+  },
+  {
+    "day": 12,
+    "line": 7,
+    "zh": "每天一点进步。",
+    "file": "pictures/d12-l08.svg",
+    "shot": "progress"
+  },
+  {
+    "day": 13,
+    "line": 0,
+    "zh": "他常常想家。",
+    "file": "pictures/d13-l01.svg",
+    "shot": "homesick"
+  },
+  {
+    "day": 13,
+    "line": 1,
+    "zh": "想家很难过。",
+    "file": "pictures/d13-l02.svg",
+    "shot": "homesicksad"
+  },
+  {
+    "day": 13,
+    "line": 2,
+    "zh": "可是他没有停。",
+    "file": "pictures/d13-l03.svg",
+    "shot": "nogiveup"
+  },
+  {
+    "day": 13,
+    "line": 3,
+    "zh": "他天天训练。",
+    "file": "pictures/d13-l04.svg",
+    "shot": "train"
+  },
+  {
+    "day": 13,
+    "line": 4,
+    "zh": "汗给他力量。",
+    "file": "pictures/d13-l05.svg",
+    "shot": "sweatpower"
+  },
+  {
+    "day": 13,
+    "line": 5,
+    "zh": "教练看见努力。",
+    "file": "pictures/d13-l06.svg",
+    "shot": "coacheffort"
+  },
+  {
+    "day": 13,
+    "line": 6,
+    "zh": "梦想比想家更大。",
+    "file": "pictures/d13-l07.svg",
+    "shot": "dreamgt"
+  },
+  {
+    "day": 13,
+    "line": 7,
+    "zh": "他继续跑。",
+    "file": "pictures/d13-l08.svg",
+    "shot": "run"
+  },
+  {
+    "day": 14,
+    "line": 0,
+    "zh": "今天我们复习。",
+    "file": "pictures/d14-l01.svg",
+    "shot": "review"
+  },
+  {
+    "day": 14,
+    "line": 1,
+    "zh": "他十二岁离开家。",
+    "file": "pictures/d14-l02.svg",
+    "shot": "goodbye"
+  },
+  {
+    "day": 14,
+    "line": 2,
+    "zh": "他去里斯本。",
+    "file": "pictures/d14-l03.svg",
+    "shot": "golisbon"
+  },
+  {
+    "day": 14,
+    "line": 3,
+    "zh": "他想家。",
+    "file": "pictures/d14-l04.svg",
+    "shot": "homesick"
+  },
+  {
+    "day": 14,
+    "line": 4,
+    "zh": "同学笑他。",
+    "file": "pictures/d14-l05.svg",
+    "shot": "tease"
+  },
+  {
+    "day": 14,
+    "line": 5,
+    "zh": "他很难过。",
+    "file": "pictures/d14-l06.svg",
+    "shot": "sad"
+  },
+  {
+    "day": 14,
+    "line": 6,
+    "zh": "可是他不放弃。",
+    "file": "pictures/d14-l07.svg",
+    "shot": "nogiveup"
+  },
+  {
+    "day": 14,
+    "line": 7,
+    "zh": "勇气成了力量。",
+    "file": "pictures/d14-l08.svg",
+    "shot": "courage"
+  },
+  {
+    "day": 15,
+    "line": 0,
+    "zh": "他十五岁了。",
+    "file": "pictures/d15-l01.svg",
+    "shot": "age15"
+  },
+  {
+    "day": 15,
+    "line": 1,
+    "zh": "他的心跳太快。",
+    "file": "pictures/d15-l02.svg",
+    "shot": "heartbeat"
+  },
+  {
+    "day": 15,
+    "line": 2,
+    "zh": "医生看见他。",
+    "file": "pictures/d15-l03.svg",
+    "shot": "doctor"
+  },
+  {
+    "day": 15,
+    "line": 3,
+    "zh": "医生说要手术。",
+    "file": "pictures/d15-l04.svg",
+    "shot": "surgerytalk"
+  },
+  {
+    "day": 15,
+    "line": 4,
+    "zh": "他害怕。",
+    "file": "pictures/d15-l05.svg",
+    "shot": "scared"
+  },
+  {
+    "day": 15,
+    "line": 5,
+    "zh": "可是他没有放弃。",
+    "file": "pictures/d15-l06.svg",
+    "shot": "nogiveup"
+  },
+  {
+    "day": 15,
+    "line": 6,
+    "zh": "他想继续踢球。",
+    "file": "pictures/d15-l07.svg",
+    "shot": "wantplay"
+  },
+  {
+    "day": 15,
+    "line": 7,
+    "zh": "梦比害怕更大。",
+    "file": "pictures/d15-l08.svg",
+    "shot": "dreamfear"
+  },
+  {
+    "day": 16,
+    "line": 0,
+    "zh": "他做了手术。",
+    "file": "pictures/d16-l01.svg",
+    "shot": "surgery"
+  },
+  {
+    "day": 16,
+    "line": 1,
+    "zh": "手术不大。",
+    "file": "pictures/d16-l02.svg",
+    "shot": "surgerysmall"
+  },
+  {
+    "day": 16,
+    "line": 2,
+    "zh": "他很快站起来。",
+    "file": "pictures/d16-l03.svg",
+    "shot": "standup"
+  },
+  {
+    "day": 16,
+    "line": 3,
+    "zh": "他说我还要踢球。",
+    "file": "pictures/d16-l04.svg",
+    "shot": "wantplay"
+  },
+  {
+    "day": 16,
+    "line": 4,
+    "zh": "教练说慢慢来。",
+    "file": "pictures/d16-l05.svg",
+    "shot": "coachslow"
+  },
+  {
+    "day": 16,
+    "line": 5,
+    "zh": "他很快又训练。",
+    "file": "pictures/d16-l06.svg",
+    "shot": "train"
+  },
+  {
+    "day": 16,
+    "line": 6,
+    "zh": "身体回来了。",
+    "file": "pictures/d16-l07.svg",
+    "shot": "bodyback"
+  },
+  {
+    "day": 16,
+    "line": 7,
+    "zh": "心更强了。",
+    "file": "pictures/d16-l08.svg",
+    "shot": "heartstrong"
+  },
+  {
+    "day": 17,
+    "line": 0,
+    "zh": "有人叫他爱哭。",
+    "file": "pictures/d17-l01.svg",
+    "shot": "crybaby"
+  },
+  {
+    "day": 17,
+    "line": 1,
+    "zh": "他听见了。",
+    "file": "pictures/d17-l02.svg",
+    "shot": "heard"
+  },
+  {
+    "day": 17,
+    "line": 2,
+    "zh": "他很难过。",
+    "file": "pictures/d17-l03.svg",
+    "shot": "sad"
+  },
+  {
+    "day": 17,
+    "line": 3,
+    "zh": "他把话变成力量。",
+    "file": "pictures/d17-l04.svg",
+    "shot": "wordpower"
+  },
+  {
+    "day": 17,
+    "line": 4,
+    "zh": "他第一个来。",
+    "file": "pictures/d17-l05.svg",
+    "shot": "first"
+  },
+  {
+    "day": 17,
+    "line": 5,
+    "zh": "他最后一个走。",
+    "file": "pictures/d17-l06.svg",
+    "shot": "last"
+  },
+  {
+    "day": 17,
+    "line": 6,
+    "zh": "汗很多。",
+    "file": "pictures/d17-l07.svg",
+    "shot": "sweat"
+  },
+  {
+    "day": 17,
+    "line": 7,
+    "zh": "努力回答了话。",
+    "file": "pictures/d17-l08.svg",
+    "shot": "effortanswer"
+  },
+  {
+    "day": 18,
+    "line": 0,
+    "zh": "他说天赋不够。",
+    "file": "pictures/d18-l01.svg",
+    "shot": "talent"
+  },
+  {
+    "day": 18,
+    "line": 1,
+    "zh": "每天都要练。",
+    "file": "pictures/d18-l02.svg",
+    "shot": "train"
+  },
+  {
+    "day": 18,
+    "line": 2,
+    "zh": "一点一点进步。",
+    "file": "pictures/d18-l03.svg",
+    "shot": "progress"
+  },
+  {
+    "day": 18,
+    "line": 3,
+    "zh": "他不怕累。",
+    "file": "pictures/d18-l04.svg",
+    "shot": "notired"
+  },
+  {
+    "day": 18,
+    "line": 4,
+    "zh": "他不怕难。",
+    "file": "pictures/d18-l05.svg",
+    "shot": "brave"
+  },
+  {
+    "day": 18,
+    "line": 5,
+    "zh": "技术越来越好。",
+    "file": "pictures/d18-l06.svg",
+    "shot": "progress"
+  },
+  {
+    "day": 18,
+    "line": 6,
+    "zh": "别人看见汗。",
+    "file": "pictures/d18-l07.svg",
+    "shot": "seesweat"
+  },
+  {
+    "day": 18,
+    "line": 7,
+    "zh": "汗比话更重要。",
+    "file": "pictures/d18-l08.svg",
+    "shot": "sweatwords"
+  },
+  {
+    "day": 19,
+    "line": 0,
+    "zh": "他会过人。",
+    "file": "pictures/d19-l01.svg",
+    "shot": "dribble"
+  },
+  {
+    "day": 19,
+    "line": 1,
+    "zh": "他会射门。",
+    "file": "pictures/d19-l02.svg",
+    "shot": "shoot"
+  },
+  {
+    "day": 19,
+    "line": 2,
+    "zh": "他跑得很快。",
+    "file": "pictures/d19-l03.svg",
+    "shot": "run"
+  },
+  {
+    "day": 19,
+    "line": 3,
+    "zh": "两只脚都会。",
+    "file": "pictures/d19-l04.svg",
+    "shot": "twofeet"
+  },
+  {
+    "day": 19,
+    "line": 4,
+    "zh": "比赛来了。",
+    "file": "pictures/d19-l05.svg",
+    "shot": "match"
+  },
+  {
+    "day": 19,
+    "line": 5,
+    "zh": "他进球了。",
+    "file": "pictures/d19-l06.svg",
+    "shot": "goal"
+  },
+  {
+    "day": 19,
+    "line": 6,
+    "zh": "大家都鼓掌。",
+    "file": "pictures/d19-l07.svg",
+    "shot": "clap"
+  },
+  {
+    "day": 19,
+    "line": 7,
+    "zh": "努力看见了光。",
+    "file": "pictures/d19-l08.svg",
+    "shot": "effortlight"
+  },
+  {
+    "day": 20,
+    "line": 0,
+    "zh": "教练信任他。",
+    "file": "pictures/d20-l01.svg",
+    "shot": "trust"
+  },
+  {
+    "day": 20,
+    "line": 1,
+    "zh": "因为他天天训练。",
+    "file": "pictures/d20-l02.svg",
+    "shot": "train"
+  },
+  {
+    "day": 20,
+    "line": 2,
+    "zh": "信任来自努力。",
+    "file": "pictures/d20-l03.svg",
+    "shot": "trusteffort"
+  },
+  {
+    "day": 20,
+    "line": 3,
+    "zh": "他没有停。",
+    "file": "pictures/d20-l04.svg",
+    "shot": "nogiveup"
+  },
+  {
+    "day": 20,
+    "line": 4,
+    "zh": "心跳的故事过去了。",
+    "file": "pictures/d20-l05.svg",
+    "shot": "heartpast"
+  },
+  {
+    "day": 20,
+    "line": 5,
+    "zh": "更强的C罗来了。",
+    "file": "pictures/d20-l06.svg",
+    "shot": "strongcr7"
+  },
+  {
+    "day": 20,
+    "line": 6,
+    "zh": "他准备好了。",
+    "file": "pictures/d20-l07.svg",
+    "shot": "ready"
+  },
+  {
+    "day": 20,
+    "line": 7,
+    "zh": "下一步很大。",
+    "file": "pictures/d20-l08.svg",
+    "shot": "nextstep"
+  },
+  {
+    "day": 21,
+    "line": 0,
+    "zh": "今天我们复习。",
+    "file": "pictures/d21-l01.svg",
+    "shot": "review"
+  },
+  {
+    "day": 21,
+    "line": 1,
+    "zh": "他十五岁做了手术。",
+    "file": "pictures/d21-l02.svg",
+    "shot": "surgery"
+  },
+  {
+    "day": 21,
+    "line": 2,
+    "zh": "他害怕。",
+    "file": "pictures/d21-l03.svg",
+    "shot": "scared"
+  },
+  {
+    "day": 21,
+    "line": 3,
+    "zh": "可是他站起来。",
+    "file": "pictures/d21-l04.svg",
+    "shot": "standup"
+  },
+  {
+    "day": 21,
+    "line": 4,
+    "zh": "有人叫他爱哭。",
+    "file": "pictures/d21-l05.svg",
+    "shot": "crybaby"
+  },
+  {
+    "day": 21,
+    "line": 5,
+    "zh": "他把话变成力量。",
+    "file": "pictures/d21-l06.svg",
+    "shot": "wordpower"
+  },
+  {
+    "day": 21,
+    "line": 6,
+    "zh": "他说天赋不够。",
+    "file": "pictures/d21-l07.svg",
+    "shot": "talent"
+  },
+  {
+    "day": 21,
+    "line": 7,
+    "zh": "每天都要努力。",
+    "file": "pictures/d21-l08.svg",
+    "shot": "effort"
+  },
+  {
+    "day": 22,
+    "line": 0,
+    "zh": "他十八岁了。",
+    "file": "pictures/d22-l01.svg",
+    "shot": "age18"
+  },
+  {
+    "day": 22,
+    "line": 1,
+    "zh": "他去英国。",
+    "file": "pictures/d22-l02.svg",
+    "shot": "england"
+  },
+  {
+    "day": 22,
+    "line": 2,
+    "zh": "他加入了曼联。",
+    "file": "pictures/d22-l03.svg",
+    "shot": "united"
+  },
+  {
+    "day": 22,
+    "line": 3,
+    "zh": "新的国家很大。",
+    "file": "pictures/d22-l04.svg",
+    "shot": "newcountry"
+  },
+  {
+    "day": 22,
+    "line": 4,
+    "zh": "新的语言很难。",
+    "file": "pictures/d22-l05.svg",
+    "shot": "language"
+  },
+  {
+    "day": 22,
+    "line": 5,
+    "zh": "他不怕学。",
+    "file": "pictures/d22-l06.svg",
+    "shot": "study"
+  },
+  {
+    "day": 22,
+    "line": 6,
+    "zh": "教练信任他。",
+    "file": "pictures/d22-l07.svg",
+    "shot": "trust"
+  },
+  {
+    "day": 22,
+    "line": 7,
+    "zh": "新的故事开始了。",
+    "file": "pictures/d22-l08.svg",
+    "shot": "newstory"
+  },
+  {
+    "day": 23,
+    "line": 0,
+    "zh": "语言是新的。",
+    "file": "pictures/d23-l01.svg",
+    "shot": "language"
+  },
+  {
+    "day": 23,
+    "line": 1,
+    "zh": "国家是新的。",
+    "file": "pictures/d23-l02.svg",
+    "shot": "newcountry"
+  },
+  {
+    "day": 23,
+    "line": 2,
+    "zh": "他天天学。",
+    "file": "pictures/d23-l03.svg",
+    "shot": "study"
+  },
+  {
+    "day": 23,
+    "line": 3,
+    "zh": "他天天练。",
+    "file": "pictures/d23-l04.svg",
+    "shot": "train"
+  },
+  {
+    "day": 23,
+    "line": 4,
+    "zh": "他不怕难。",
+    "file": "pictures/d23-l05.svg",
+    "shot": "brave"
+  },
+  {
+    "day": 23,
+    "line": 5,
+    "zh": "一点一点会了。",
+    "file": "pictures/d23-l06.svg",
+    "shot": "progress"
+  },
+  {
+    "day": 23,
+    "line": 6,
+    "zh": "努力帮助他。",
+    "file": "pictures/d23-l07.svg",
+    "shot": "efforthelp"
+  },
+  {
+    "day": 23,
+    "line": 7,
+    "zh": "新家慢慢来了。",
+    "file": "pictures/d23-l08.svg",
+    "shot": "newhome"
+  },
+  {
+    "day": 24,
+    "line": 0,
+    "zh": "有一场重要的比赛。",
+    "file": "pictures/d24-l01.svg",
+    "shot": "match"
+  },
+  {
+    "day": 24,
+    "line": 1,
+    "zh": "他很认真。",
+    "file": "pictures/d24-l02.svg",
+    "shot": "serious"
+  },
+  {
+    "day": 24,
+    "line": 2,
+    "zh": "他跑得很快。",
+    "file": "pictures/d24-l03.svg",
+    "shot": "run"
+  },
+  {
+    "day": 24,
+    "line": 3,
+    "zh": "他过人了。",
+    "file": "pictures/d24-l04.svg",
+    "shot": "dribble"
+  },
+  {
+    "day": 24,
+    "line": 4,
+    "zh": "他射门了。",
+    "file": "pictures/d24-l05.svg",
+    "shot": "shoot"
+  },
+  {
+    "day": 24,
+    "line": 5,
+    "zh": "他进球了。",
+    "file": "pictures/d24-l06.svg",
+    "shot": "goal"
+  },
+  {
+    "day": 24,
+    "line": 6,
+    "zh": "大家都鼓掌。",
+    "file": "pictures/d24-l07.svg",
+    "shot": "clap"
+  },
+  {
+    "day": 24,
+    "line": 7,
+    "zh": "小岛上的孩子赢了。",
+    "file": "pictures/d24-l08.svg",
+    "shot": "islandwin"
+  },
+  {
+    "day": 25,
+    "line": 0,
+    "zh": "他成了有名的球员。",
+    "file": "pictures/d25-l01.svg",
+    "shot": "famous"
+  },
+  {
+    "day": 25,
+    "line": 1,
+    "zh": "他成了足球明星。",
+    "file": "pictures/d25-l02.svg",
+    "shot": "star"
+  },
+  {
+    "day": 25,
+    "line": 2,
+    "zh": "他没有忘记小岛。",
+    "file": "pictures/d25-l03.svg",
+    "shot": "rememberisland"
+  },
+  {
+    "day": 25,
+    "line": 3,
+    "zh": "他没有忘记家。",
+    "file": "pictures/d25-l04.svg",
+    "shot": "rememberhome"
+  },
+  {
+    "day": 25,
+    "line": 4,
+    "zh": "他帮助家里。",
+    "file": "pictures/d25-l05.svg",
+    "shot": "helphome"
+  },
+  {
+    "day": 25,
+    "line": 5,
+    "zh": "他也帮助孩子。",
+    "file": "pictures/d25-l06.svg",
+    "shot": "helpkids"
+  },
+  {
+    "day": 25,
+    "line": 6,
+    "zh": "爱还在。",
+    "file": "pictures/d25-l07.svg",
+    "shot": "love"
+  },
+  {
+    "day": 25,
+    "line": 7,
+    "zh": "这很重要。",
+    "file": "pictures/d25-l08.svg",
+    "shot": "important"
+  },
+  {
+    "day": 26,
+    "line": 0,
+    "zh": "小岛还在。",
+    "file": "pictures/d26-l01.svg",
+    "shot": "island"
+  },
+  {
+    "day": 26,
+    "line": 1,
+    "zh": "家里的人还在。",
+    "file": "pictures/d26-l02.svg",
+    "shot": "crowd"
+  },
+  {
+    "day": 26,
+    "line": 2,
+    "zh": "他回到岛上。",
+    "file": "pictures/d26-l03.svg",
+    "shot": "returnisland"
+  },
+  {
+    "day": 26,
+    "line": 3,
+    "zh": "他帮助孩子踢球。",
+    "file": "pictures/d26-l04.svg",
+    "shot": "helpkids"
+  },
+  {
+    "day": 26,
+    "line": 4,
+    "zh": "他说你们也可以。",
+    "file": "pictures/d26-l05.svg",
+    "shot": "youcan"
+  },
+  {
+    "day": 26,
+    "line": 5,
+    "zh": "梦想可以很大。",
+    "file": "pictures/d26-l06.svg",
+    "shot": "dreambig"
+  },
+  {
+    "day": 26,
+    "line": 6,
+    "zh": "每天一点就好。",
+    "file": "pictures/d26-l07.svg",
+    "shot": "littleday"
+  },
+  {
+    "day": 26,
+    "line": 7,
+    "zh": "他没有忘记开始。",
+    "file": "pictures/d26-l08.svg",
+    "shot": "rememberstart"
+  },
+  {
+    "day": 27,
+    "line": 0,
+    "zh": "他说努力最重要。",
+    "file": "pictures/d27-l01.svg",
+    "shot": "effortmost"
+  },
+  {
+    "day": 27,
+    "line": 1,
+    "zh": "天赋不够。",
+    "file": "pictures/d27-l02.svg",
+    "shot": "talent"
+  },
+  {
+    "day": 27,
+    "line": 2,
+    "zh": "每天都要练。",
+    "file": "pictures/d27-l03.svg",
+    "shot": "train"
+  },
+  {
+    "day": 27,
+    "line": 3,
+    "zh": "他现在还在跑。",
+    "file": "pictures/d27-l04.svg",
+    "shot": "run"
+  },
+  {
+    "day": 27,
+    "line": 4,
+    "zh": "他还想赢。",
+    "file": "pictures/d27-l05.svg",
+    "shot": "wantwin"
+  },
+  {
+    "day": 27,
+    "line": 5,
+    "zh": "他不觉得够了。",
+    "file": "pictures/d27-l06.svg",
+    "shot": "notenough"
+  },
+  {
+    "day": 27,
+    "line": 6,
+    "zh": "这就是C罗。",
+    "file": "pictures/d27-l07.svg",
+    "shot": "portrait"
+  },
+  {
+    "day": 27,
+    "line": 7,
+    "zh": "故事还没停。",
+    "file": "pictures/d27-l08.svg",
+    "shot": "storygo"
+  },
+  {
+    "day": 28,
+    "line": 0,
+    "zh": "你也可以有梦想。",
+    "file": "pictures/d28-l01.svg",
+    "shot": "youdream"
+  },
+  {
+    "day": 28,
+    "line": 1,
+    "zh": "你可以慢慢学。",
+    "file": "pictures/d28-l02.svg",
+    "shot": "youslow"
+  },
+  {
+    "day": 28,
+    "line": 2,
+    "zh": "你可以每天一点。",
+    "file": "pictures/d28-l03.svg",
+    "shot": "littleday"
+  },
+  {
+    "day": 28,
+    "line": 3,
+    "zh": "离开家很难。",
+    "file": "pictures/d28-l04.svg",
+    "shot": "goodbyehard"
+  },
+  {
+    "day": 28,
+    "line": 4,
+    "zh": "学中文也难。",
+    "file": "pictures/d28-l05.svg",
+    "shot": "chinese"
+  },
+  {
+    "day": 28,
+    "line": 5,
+    "zh": "可是你不放弃。",
+    "file": "pictures/d28-l06.svg",
+    "shot": "younogiveup"
+  },
+  {
+    "day": 28,
+    "line": 6,
+    "zh": "一点一点会了。",
+    "file": "pictures/d28-l07.svg",
+    "shot": "progress"
+  },
+  {
+    "day": 28,
+    "line": 7,
+    "zh": "这就是力量。",
+    "file": "pictures/d28-l08.svg",
+    "shot": "power"
+  },
+  {
+    "day": 29,
+    "line": 0,
+    "zh": "他三岁开始踢足球。",
+    "file": "pictures/d29-l01.svg",
+    "shot": "toddler"
+  },
+  {
+    "day": 29,
+    "line": 1,
+    "zh": "他十二岁离开家。",
+    "file": "pictures/d29-l02.svg",
+    "shot": "goodbye"
+  },
+  {
+    "day": 29,
+    "line": 2,
+    "zh": "他十五岁站起来。",
+    "file": "pictures/d29-l03.svg",
+    "shot": "standup"
+  },
+  {
+    "day": 29,
+    "line": 3,
+    "zh": "他十八岁去英国。",
+    "file": "pictures/d29-l04.svg",
+    "shot": "england"
+  },
+  {
+    "day": 29,
+    "line": 4,
+    "zh": "他成了足球明星。",
+    "file": "pictures/d29-l05.svg",
+    "shot": "star"
+  },
+  {
+    "day": 29,
+    "line": 5,
+    "zh": "他一直很努力。",
+    "file": "pictures/d29-l06.svg",
+    "shot": "effort"
+  },
+  {
+    "day": 29,
+    "line": 6,
+    "zh": "故事很长。",
+    "file": "pictures/d29-l07.svg",
+    "shot": "storylong"
+  },
+  {
+    "day": 29,
+    "line": 7,
+    "zh": "每天十五分钟。",
+    "file": "pictures/d29-l08.svg",
+    "shot": "fifteen"
+  },
+  {
+    "day": 30,
+    "line": 0,
+    "zh": "今天是第三十天。",
+    "file": "pictures/d30-l01.svg",
+    "shot": "day30"
+  },
+  {
+    "day": 30,
+    "line": 1,
+    "zh": "C罗的故事很长。",
+    "file": "pictures/d30-l02.svg",
+    "shot": "storylong"
+  },
+  {
+    "day": 30,
+    "line": 2,
+    "zh": "从小岛到世界。",
+    "file": "pictures/d30-l03.svg",
+    "shot": "islandworld"
+  },
+  {
+    "day": 30,
+    "line": 3,
+    "zh": "从三岁到今天。",
+    "file": "pictures/d30-l04.svg",
+    "shot": "timeline"
+  },
+  {
+    "day": 30,
+    "line": 4,
+    "zh": "他没有放弃。",
+    "file": "pictures/d30-l05.svg",
+    "shot": "nogiveup"
+  },
+  {
+    "day": 30,
+    "line": 5,
+    "zh": "你也开始了。",
+    "file": "pictures/d30-l06.svg",
+    "shot": "youstart"
+  },
+  {
+    "day": 30,
+    "line": 6,
+    "zh": "明天还可以学。",
+    "file": "pictures/d30-l07.svg",
+    "shot": "tomorrow"
+  },
+  {
+    "day": 30,
+    "line": 7,
+    "zh": "努力最重要。",
+    "file": "pictures/d30-l08.svg",
+    "shot": "effortmost"
+  }
+]

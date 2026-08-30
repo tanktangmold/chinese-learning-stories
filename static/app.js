@@ -1,15 +1,5 @@
-const SCENE_ALIAS = {
-    house: "island",
-    kick: "firstkick",
-    run: "daily",
-    effort: "daily",
-    goodbye: "academy",
-    travel: "star",
-};
-
 const AVATARS = ["⚽", "🌟", "🐼", "🐶", "🌸", "🔥", "🌈", "🎯"];
 const IMAGE_STYLES = ["comic", "picturebook", "realistic"];
-const IMAGE_VERSION = "instant-svg-v1";
 const CLASSROOM_KEY = "xiaoxue-classroom";
 const STATIC_VOICES = [
     { id: "xiaoxiao", nameZh: "晓晓", nameJa: "女声・お姉さん", gender: "female", pitch: 1.12, rate: 0.9 },
@@ -179,90 +169,6 @@ function showScreen(name) {
         stopTimer();
         stopSpeak();
     }
-}
-
-function sceneUrl(style, scene) {
-    const id = SCENE_ALIAS[scene] || scene || "intro";
-    return `images/${style}/${id}.webp`;
-}
-
-function lessonBeat(day, line) {
-    if (state.lesson && Number(state.lesson.day) === Number(day) && state.lesson.lines && state.lesson.lines[line]) {
-        return { beat: state.lesson.lines[line], scene: state.lesson.scene };
-    }
-    const lesson = (state.course && state.course.days[day - 1]) || (staticCourse && staticCourse.days[day - 1]);
-    if (!lesson) return { beat: null, scene: "intro" };
-    return { beat: lesson.lines[line], scene: lesson.scene };
-}
-
-function pictureConcept(zh, scene) {
-    zh = String(zh || "");
-    if (/手术|心跳|医生|医院/.test(zh)) return "hospital";
-    if (/家里人|爸爸|妈妈|爱/.test(zh)) return "family";
-    if (/离开|十二岁|打电话|想家|哭/.test(zh)) return "goodbye";
-    if (/里斯本|学院|口音/.test(zh) || scene === "academy") return "academy";
-    if (/英国|曼联|鼓掌|有名/.test(zh) || scene === "star") return "stadium";
-    if (/训练|努力|射门|进球|两只脚/.test(zh)) return "training";
-    if (/小岛|葡萄牙|家很小/.test(zh) || scene === "island" || scene === "house") return "island";
-    return "play";
-}
-
-function picturePalette(style) {
-    if (style === "picturebook") return { sky: "#fff3cf", sky2: "#d9f0ff", ground: "#cde8b5", ink: "#5c4a32", fill: "#fffaf0", sun: "#f7c96f", red: "#e66954", blue: "#78a6d8" };
-    if (style === "realistic") return { sky: "#dfe8ef", sky2: "#f4efe4", ground: "#98b783", ink: "#2e2a22", fill: "#f2eadc", sun: "#c9a566", red: "#b94e42", blue: "#667f9b" };
-    return { sky: "#c9f0ff", sky2: "#fff3b8", ground: "#72d06d", ink: "#2c2419", fill: "#fffdf2", sun: "#ffd34d", red: "#ef4f3d", blue: "#4aa3ff" };
-}
-
-function hashSeed(text) {
-    let n = 0;
-    String(text || "").split("").forEach((ch, i) => {
-        n = (n + ch.charCodeAt(0) * (i + 3)) % 997;
-    });
-    return n;
-}
-
-function instantSentenceSvg(zh, scene, style) {
-    const p = picturePalette(style);
-    const concept = pictureConcept(zh, scene);
-    const seed = hashSeed(zh + style);
-    const boyX = 280 + (seed % 70);
-    const ballX = 430 + (seed % 80);
-    const extras = {
-        hospital: `<rect x="70" y="250" width="200" height="130" rx="16" fill="${p.fill}" stroke="${p.ink}" stroke-width="6"/><rect x="150" y="280" width="36" height="70" fill="${p.red}"/><rect x="132" y="298" width="72" height="36" fill="${p.red}"/>`,
-        family: `<path d="M80 390h210V250L185 180 80 250z" fill="${p.fill}" stroke="${p.ink}" stroke-width="6"/><rect x="140" y="300" width="50" height="90" fill="${p.blue}"/>`,
-        goodbye: `<path d="M80 380h150v-90l-75-50-75 50z" fill="${p.fill}" stroke="${p.ink}" stroke-width="6"/><path d="M500 360 l30 30 h-60z" fill="${p.sun}" stroke="${p.ink}" stroke-width="4"/>`,
-        academy: `<rect x="70" y="230" width="230" height="150" rx="14" fill="${p.fill}" stroke="${p.ink}" stroke-width="6"/><rect x="100" y="270" width="44" height="50" fill="${p.blue}"/><rect x="170" y="270" width="44" height="50" fill="${p.blue}"/>`,
-        stadium: `<path d="M50 330 C180 230 590 230 720 330 L670 400 C530 340 230 340 100 400z" fill="${p.blue}" stroke="${p.ink}" stroke-width="6"/>`,
-        training: `<path d="M110 400h150M110 400v-100h150" fill="none" stroke="${p.ink}" stroke-width="8"/><path d="M90 430h40l-20-50zM210 430h40l-20-50z" fill="${p.sun}" stroke="${p.ink}" stroke-width="4"/>`,
-        island: `<path d="M60 380 C140 310 240 310 320 380" fill="${p.ground}" stroke="${p.ink}" stroke-width="6"/><path d="M90 375h140v-85l-70-50-70 50z" fill="${p.fill}" stroke="${p.ink}" stroke-width="6"/>`,
-        play: `<path d="M70 390 C150 320 250 320 330 390" fill="${p.ground}" stroke="${p.ink}" stroke-width="6"/><circle cx="640" cy="90" r="40" fill="${p.sun}"/>`,
-    };
-    const label = String(zh || "").replace(/[<>&]/g, "");
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 576">
-<defs><linearGradient id="s" x1="0" x2="0" y1="0" y2="1"><stop stop-color="${p.sky}"/><stop offset="1" stop-color="${p.sky2}"/></linearGradient></defs>
-<rect width="768" height="576" fill="url(#s)"/>
-<ellipse cx="384" cy="520" rx="330" ry="58" fill="${p.ground}"/>
-${extras[concept] || extras.play}
-<g transform="translate(${boyX} 230)">
-<path d="M58 148 l-24 70M104 148 l30 68" stroke="${p.ink}" stroke-width="16" stroke-linecap="round"/>
-<path d="M42 84 h78 l20 70 H24z" fill="${p.red}" stroke="${p.ink}" stroke-width="6"/>
-<circle cx="80" cy="50" r="38" fill="#f4c69b" stroke="${p.ink}" stroke-width="5"/>
-<path d="M42 36 C50 2 100 -6 120 28 C98 16 80 26 66 16z" fill="#2b2118"/>
-</g>
-<g transform="translate(${ballX} 430)">
-<circle r="30" fill="#fff" stroke="${p.ink}" stroke-width="5"/>
-<path d="M0 -16 L14 -4 L8 14 H-8 L-14 -4z" fill="${p.ink}"/>
-</g>
-<text x="384" y="548" text-anchor="middle" font-size="22" font-weight="700" fill="${p.ink}">${label}</text>
-</svg>`;
-    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
-}
-
-function lineImageUrl(day, line, style) {
-    const found = lessonBeat(day, line);
-    const zh = found.beat && found.beat.sentence ? found.beat.sentence.zh : "";
-    const scene = (found.beat && found.beat.scene) || found.scene;
-    return instantSentenceSvg(zh, scene, style || state.style);
 }
 
 function loadClassroom() {
@@ -1033,7 +939,7 @@ function renderLesson() {
     if (frame) frame.classList.remove("loading");
     if (loading) loading.hidden = true;
     if (typeof paintSentencePicture === "function") {
-        paintSentencePicture($("scene-art"), beat.sentence.zh, beat.scene || lesson.scene, state.style);
+        paintSentencePicture($("scene-art"), beat.sentence.zh, beat.scene || lesson.scene, state.style, lesson.day, state.index);
     } else if ($("scene-art")) {
         $("scene-art").textContent = beat.sentence.zh;
     }

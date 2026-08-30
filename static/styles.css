@@ -504,11 +504,15 @@ button, a, input {
     background: var(--paper-deep);
 }
 
-.scene-art svg {
+.scene-art svg,
+.scene-art .baked-art {
     display: block;
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
+.baked-art.style-picturebook { filter: saturate(1.12) sepia(.18); }
+.baked-art.style-realistic { filter: saturate(.72) contrast(1.06); }
 
 .picture-frame figcaption {
     padding: 8px 12px 12px;
