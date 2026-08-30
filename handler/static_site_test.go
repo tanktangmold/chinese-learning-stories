@@ -33,7 +33,7 @@ func TestStaticSiteHasHomepageAndCourseData(t *testing.T) {
 		t.Fatal("homepage missing title")
 	}
 
-	for _, name := range []string{"index.html", "app.js", "styles.css", "sw.js", "apple-touch-icon.png", "data/course.json", "data/games.json"} {
+	for _, name := range []string{"index.html", "app.js", "picture.js", "styles.css", "sw.js", "apple-touch-icon.png", "data/course.json", "data/games.json"} {
 		if _, err := os.Stat(filepath.Join(root, name)); err != nil {
 			t.Fatalf("%s: %v", name, err)
 		}

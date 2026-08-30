@@ -495,12 +495,19 @@ button, a, input {
     overflow: hidden;
 }
 
-.picture-frame img {
+.picture-frame img,
+.scene-art {
     display: block;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
     background: var(--paper-deep);
+}
+
+.scene-art svg {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .picture-frame figcaption {

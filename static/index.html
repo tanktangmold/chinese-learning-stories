@@ -120,8 +120,9 @@
             <div class="voice-bar" id="voice-bar" aria-label="中国語の声"></div>
             <div class="lesson-grid">
                 <figure class="picture-frame" id="picture-frame">
-                    <img id="scene-image" alt="この文の絵">
-                    <div class="picture-loading" id="picture-loading">絵を準備中…</div>
+                    <div id="scene-art" class="scene-art" role="img" aria-label="この文の絵"></div>
+                    <img id="scene-image" alt="" hidden>
+                    <div class="picture-loading" id="picture-loading" hidden>絵を準備中…</div>
                     <figcaption id="scene-caption"></figcaption>
                 </figure>
                 <div class="lesson-copy">
@@ -167,6 +168,7 @@
             <div class="game-board" id="game-board"></div>
         </section>
     </div>
+    <script src="picture.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

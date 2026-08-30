@@ -988,43 +988,17 @@ function renderVoices() {
 function renderLesson() {
     const beat = currentBeat();
     const lesson = state.lesson;
-    const imageSeq = ++state.imageSeq;
     $("day-moral").textContent = `${lesson.title.ja}　${lesson.moral.ja}`;
-    const img = $("scene-image");
     const frame = $("picture-frame");
     const loading = $("picture-loading");
-    const src = lineImageUrl(state.day, state.index, state.style);
-    if (state.imageLoadTimer) clearTimeout(state.imageLoadTimer);
-    let imageDone = false;
     if (frame) frame.classList.remove("loading");
     if (loading) loading.hidden = true;
-    state.imageLoadTimer = setTimeout(() => {
-        if (imageDone || imageSeq !== state.imageSeq) return;
-        if (frame) frame.classList.add("loading");
-        if (loading) loading.hidden = false;
-    }, 250);
-    img.onload = () => {
-        if (imageSeq !== state.imageSeq) return;
-        imageDone = true;
-        if (state.imageLoadTimer) clearTimeout(state.imageLoadTimer);
-        if (frame) frame.classList.remove("loading");
-        if (loading) loading.hidden = true;
-    };
-    img.onerror = () => {
-        if (imageSeq !== state.imageSeq) return;
-        imageDone = true;
-        if (state.imageLoadTimer) clearTimeout(state.imageLoadTimer);
-        img.onerror = null;
-        img.src = sceneUrl(state.style, beat.scene || lesson.scene);
-        if (loading) loading.hidden = true;
-        if (frame) frame.classList.remove("loading");
-    };
-    img.src = src;
-    img.alt = beat.sentence.zh;
+    paintSentencePicture($("scene-art"), beat.sentence.zh, beat.scene || lesson.scene, state.style);
+    const art = $("scene-art");
+    if (art) art.setAttribute("aria-label", beat.sentence.zh);
     $("scene-caption").textContent = `${lesson.day}日目 · ${state.index + 1} / ${lesson.lines.length}　${beat.sentence.zh}`;
     if (state.index + 1 < lesson.lines.length) {
-        const preload = new Image();
-        preload.src = lineImageUrl(state.day, state.index + 1, state.style);
+        /* pictures are inline SVG; no network preload */
     }
     $("pattern-card").innerHTML = `<div class="pattern-label">句型</div>
         <p class="pattern-zh">${escapeHtml(beat.pattern.zh)}</p>
