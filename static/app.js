@@ -1222,6 +1222,7 @@ function renderPractice() {
     paintTestLead();
     card.innerHTML = `<p class="practice-q">${state.practiceIndex + 1} / ${TEST_SIZE}　·　<span class="test-score">${state.testScore} 点</span></p>
         <button type="button" class="primary-btn big" id="practice-play">▶ 中国語を聞く</button>
+        <p class="test-speak">${escapeHtml(item.speak)}</p>
         <p class="lead">${escapeHtml(item.prompt)}</p>
         <div class="choice-grid" id="practice-choices"></div>`;
     $("practice-play").addEventListener("click", () => speakChinese(item.speak));

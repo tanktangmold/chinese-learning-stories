@@ -1034,6 +1034,11 @@ html {
 .choice-btn.ok { background: #c8e6c9; }
 .choice-btn.long { font-size: 16px; line-height: 1.35; }
 .test-score { color: var(--teal); }
+.test-speak {
+    margin: 8px 0 0;
+    font-size: 28px;
+    font-weight: 800;
+}
 .reward .primary-btn.big + .primary-btn.big,
 .game-board .primary-btn.big + .nav-btn {
     margin-top: 10px;
