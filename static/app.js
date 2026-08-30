@@ -654,6 +654,7 @@ async function loadKids() {
         }
     }
     await ensureStaticData();
+    if (staticCourse) state.course = staticCourse;
     state.children = loadClassroom().children;
     state.voices = STATIC_VOICES;
     state.info = {
@@ -726,14 +727,33 @@ function renderKids() {
     });
 }
 
-async function selectChild(child) {
-    state.child = child;
-    localStorage.setItem("learn-child", child.id);
-    state.course = await api("/api/course");
-    state.progress = await api(`/api/children/${child.id}/progress`);
-    preloadCourseImages();
-    renderCalendar();
-    showScreen("calendar");
+function lessonFromCourse(day) {
+    const list = (state.course && state.course.days) || (staticCourse && staticCourse.days) || [];
+    return list.find((item) => Number(item.day) === Number(day)) || list[day - 1] || null;
+}
+
+function showCalendarError(message) {
+    const lead = $("calendar-lead");
+    if (lead) lead.textContent = message;
+}
+
+async function selectChild(child, startDay) {
+    try {
+        state.child = child;
+        localStorage.setItem("learn-child", child.id);
+        if (!state.course || !state.course.days) {
+            state.course = staticCourse || (await api("/api/course"));
+        }
+        state.progress = await api(`/api/children/${child.id}/progress`);
+        preloadCourseImages();
+        renderCalendar();
+        showScreen("calendar");
+        if (startDay) await openDay(startDay);
+    } catch (err) {
+        console.error(err);
+        showCalendarError("还没打开课程。再点一次头像，或刷新页面。");
+        showScreen("calendar");
+    }
 }
 
 function dayState(day) {
@@ -748,13 +768,21 @@ function isUnlocked(day) {
 
 function renderCalendar() {
     $("calendar-title").textContent = `${state.child.avatar} ${state.child.name} の30日`;
-    const done = (state.progress.completedDays || []).length;
+    const done = ((state.progress && state.progress.completedDays) || []).length;
     const streak = studyStreak();
     const streakNote = streak >= 2 ? `　🔥 ${streak}日つづけてがんばってるね！` : "";
     $("calendar-lead").textContent = `クリア ${done} / 30日。毎日15分の物語。${streakNote}`;
+    const startBtn = $("start-day-btn");
+    if (startBtn) {
+        const nextDay = done < 30 ? done + 1 : 1;
+        startBtn.hidden = false;
+        startBtn.textContent = nextDay === 1 ? "⚽ 第1天开始" : `⚽ 第${nextDay}天`;
+        startBtn.onclick = () => openDay(nextDay);
+    }
     const grid = $("month-grid");
     grid.innerHTML = "";
-    state.course.days.forEach((lesson) => {
+    const days = (state.course && state.course.days) || [];
+    days.forEach((lesson) => {
         const st = dayState(lesson.day);
         const unlocked = isUnlocked(lesson.day);
         const btn = document.createElement("button");
@@ -772,23 +800,39 @@ function renderCalendar() {
 }
 
 async function openDay(day) {
-    state.day = day;
-    state.lesson = await api(`/api/course/day/${day}`);
-    const st = dayState(day);
-    state.index = 0;
-    state.heard = new Set(st && st.heard ? st.heard : []);
-    state.seconds = st && st.seconds ? st.seconds : 0;
-    const isNewDay = !(st && st.lessonDone);
-    if (isNewDay && day > 1 && startWarmup()) return;
-    enterLesson();
+    try {
+        const lesson = lessonFromCourse(day) || (await api(`/api/course/day/${day}`));
+        if (!lesson || !lesson.lines || !lesson.lines.length) {
+            throw new Error("day not found");
+        }
+        state.day = day;
+        state.lesson = lesson;
+        const st = dayState(day);
+        state.index = 0;
+        state.heard = new Set(st && st.heard ? st.heard : []);
+        state.seconds = st && st.seconds ? st.seconds : 0;
+        const isNewDay = !(st && st.lessonDone);
+        if (isNewDay && day > 1 && startWarmup()) return;
+        enterLesson();
+    } catch (err) {
+        console.error(err);
+        showCalendarError("第" + day + "天暂时打不开。请刷新后再点一次。");
+        showScreen("calendar");
+    }
 }
 
 function enterLesson() {
-    renderStyles();
-    renderVoices();
-    renderLesson();
-    showScreen("lesson");
-    startTimer();
+    try {
+        renderStyles();
+        renderVoices();
+        renderLesson();
+        showScreen("lesson");
+        startTimer();
+    } catch (err) {
+        console.error(err);
+        showCalendarError("课文打不开。请刷新页面后再试。");
+        showScreen("calendar");
+    }
 }
 
 // --- warm-up: 3 quick review questions from already-finished days ---------
@@ -993,7 +1037,11 @@ function renderLesson() {
     const loading = $("picture-loading");
     if (frame) frame.classList.remove("loading");
     if (loading) loading.hidden = true;
-    paintSentencePicture($("scene-art"), beat.sentence.zh, beat.scene || lesson.scene, state.style);
+    if (typeof paintSentencePicture === "function") {
+        paintSentencePicture($("scene-art"), beat.sentence.zh, beat.scene || lesson.scene, state.style);
+    } else if ($("scene-art")) {
+        $("scene-art").textContent = beat.sentence.zh;
+    }
     const art = $("scene-art");
     if (art) art.setAttribute("aria-label", beat.sentence.zh);
     $("scene-caption").textContent = `${lesson.day}日目 · ${state.index + 1} / ${lesson.lines.length}　${beat.sentence.zh}`;
@@ -1289,18 +1337,29 @@ function escapeHtml(value) {
         .replace(/"/g, "&quot;");
 }
 
+function onTap(id, fn) {
+    const el = $(id);
+    if (!el) return;
+    el.addEventListener("click", fn);
+}
+
 $("add-kid").addEventListener("submit", async (event) => {
     event.preventDefault();
     const name = $("kid-name").value.trim();
     if (!name) return;
-    const child = await api("/api/children", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, avatar: state.avatar }),
-    });
-    $("kid-name").value = "";
-    await loadKids();
-    selectChild(child);
+    try {
+        const child = await api("/api/children", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, avatar: state.avatar }),
+        });
+        $("kid-name").value = "";
+        await loadKids();
+        await selectChild(child, 1);
+    } catch (err) {
+        console.error(err);
+        if ($("lan-hint")) $("lan-hint").textContent = "名字保存失败。请再按一次「つくる」。";
+    }
 });
 
 $("back-btn").addEventListener("click", () => {
@@ -1319,17 +1378,17 @@ $("back-btn").addEventListener("click", () => {
     showScreen("kids");
 });
 
-$("album-btn").addEventListener("click", () => {
+onTap("album-btn", () => {
     renderAlbum();
     showScreen("album");
 });
 
-$("report-btn").addEventListener("click", () => {
+onTap("report-btn", () => {
     renderReport();
     showScreen("report");
 });
 
-$("warmup-skip").addEventListener("click", () => enterLesson());
+onTap("warmup-skip", () => enterLesson());
 
 $("child-chip").addEventListener("click", () => showScreen("kids"));
 $("sentence-card").addEventListener("click", () => {

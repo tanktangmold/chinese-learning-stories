@@ -848,6 +848,11 @@ html {
     font-size: 18px;
 }
 
+.start-day-btn {
+    width: 100%;
+    margin: 12px 0 8px;
+}
+
 .calendar-actions {
     display: flex;
     flex-wrap: wrap;
