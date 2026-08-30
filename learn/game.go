@@ -2,7 +2,7 @@ package learn
 
 import "strings"
 
-// Game is one reward game unlocked after a 15-minute lesson.
+// Game is one reward game unlocked after a 9-point test.
 type Game struct {
 	Day   int        `json:"day"`
 	Kind  string     `json:"kind"`

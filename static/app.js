@@ -154,6 +154,7 @@ const state = {
     screen: "kids",
     practice: [],
     practiceIndex: 0,
+    testScore: 0,
     game: null,
     gameIndex: 0,
     buildPicked: [],
@@ -336,7 +337,7 @@ function applyLocalProgress(childId, patch) {
         if (day === 30) progress.currentDay = 30;
     }
     if (patch.gameDone) {
-        if (!dayState.lessonDone) throw new Error("finish today's 15-minute lesson first");
+        if (!dayState.lessonDone) throw new Error("先做完一轮测试，拿到9分满分");
         dayState.gameDone = true;
     }
     progress.days[key] = dayState;
@@ -400,7 +401,7 @@ function staticApi(url, opts) {
         if (childID) {
             const progress = getLocalProgress(childID);
             const st = progress.days[String(day)];
-            if (!st || !st.lessonDone) throw new Error("finish the 15-minute lesson first");
+            if (!st || !st.lessonDone) throw new Error("先做完一轮测试，拿到9分满分");
         }
         const game = (staticGames || []).find((item) => item.day === day);
         if (!game) throw new Error("day not found");
@@ -771,7 +772,7 @@ function renderCalendar() {
     const done = ((state.progress && state.progress.completedDays) || []).length;
     const streak = studyStreak();
     const streakNote = streak >= 2 ? `　🔥 ${streak}日つづけてがんばってるね！` : "";
-    $("calendar-lead").textContent = `クリア ${done} / 30日。毎日15分の物語。${streakNote}`;
+    $("calendar-lead").textContent = `クリア ${done} / 30日。一轮のあと9点テスト。満点でゲームと次の一轮。${streakNote}`;
     const startBtn = $("start-day-btn");
     if (startBtn) {
         const nextDay = done < 30 ? done + 1 : 1;
@@ -827,7 +828,7 @@ function enterLesson() {
         renderVoices();
         renderLesson();
         showScreen("lesson");
-        startTimer();
+        if ($("timer-label")) $("timer-label").textContent = "听故事";
     } catch (err) {
         console.error(err);
         showCalendarError("课文打不开。请刷新页面后再试。");
@@ -965,13 +966,7 @@ function renderAlbum() {
 }
 
 function startTimer() {
-    stopTimer();
-    updateTimer();
-    state.timer = setInterval(() => {
-        state.seconds += 1;
-        updateTimer();
-        if (state.seconds % 20 === 0) saveProgress({ seconds: state.seconds });
-    }, 1000);
+    // 15-minute gate removed: one story round + 9-point test instead.
 }
 
 function stopTimer() {
@@ -1071,7 +1066,7 @@ function renderLesson() {
     $("prev-btn").disabled = state.index === 0;
     const last = state.index === lesson.lines.length - 1;
     const allHeard = lesson.lines.every((_, i) => state.heard.has(i));
-    $("next-btn").textContent = last && allHeard ? "15分クリアへ" : last ? "ぜんぶ聞こう" : "つぎの文";
+    $("next-btn").textContent = last && allHeard ? "一轮测试へ" : last ? "ぜんぶ聞こう" : "つぎの文";
     prefetchLessonAudio();
 }
 
@@ -1113,31 +1108,102 @@ function go(delta) {
     renderLesson();
 }
 
-function contentWords(limit) {
+const TEST_SIZE = 9;
+const TEST_WORD_COUNT = 6;
+
+function uniqueTokens(list) {
     const seen = new Set();
     const out = [];
-    state.lesson.lines.forEach((beat) => {
-        (beat.sentence.tokens || []).forEach((token) => {
-            if (SKIP_WORDS.has(token.zh) || seen.has(token.zh)) return;
-            seen.add(token.zh);
-            out.push(token);
-        });
+    (list || []).forEach((token) => {
+        if (!token || !token.zh || seen.has(token.zh)) return;
+        seen.add(token.zh);
+        out.push(token);
     });
-    return out.slice(0, limit);
+    return out;
 }
 
-function openPractice() {
-    stopTimer();
-    const words = contentWords(4);
-    const pool = contentWords(12);
-    state.practice = words.map((word) => {
+function testWordPool() {
+    const today = [];
+    (state.lesson.lines || []).forEach((beat) => {
+        (beat.sentence.tokens || []).forEach((token) => {
+            if (SKIP_WORDS.has(token.zh) || !token.pinyin) return;
+            today.push(token);
+        });
+    });
+    const primary = uniqueTokens(today);
+    const seen = new Set(primary.map((token) => token.zh));
+    const review = state.progress
+        ? uniqueTokens(reviewableWords()).filter((token) => !seen.has(token.zh))
+        : [];
+    return primary.concat(review);
+}
+
+function buildNineTest() {
+    const pool = testWordPool();
+    const lines = (state.lesson.lines || []).filter((beat) => beat.sentence && beat.sentence.zh && beat.sentence.ja);
+    const wordN = Math.min(TEST_WORD_COUNT, pool.length, TEST_SIZE);
+    const items = [];
+    shuffle(pool).slice(0, wordN).forEach((word) => {
         const options = [word.zh];
         shuffle(pool).forEach((other) => {
             if (other.zh !== word.zh && options.length < 4) options.push(other.zh);
         });
-        return { word, options: shuffle(options), answer: word.zh };
+        items.push({
+            kind: "word",
+            speak: word.zh,
+            prompt: `${word.ja || ""} はどれ？`,
+            options: shuffle(options),
+            answer: word.zh,
+            word,
+        });
     });
+    const sentenceN = TEST_SIZE - items.length;
+    const sentSource = shuffle(lines.slice());
+    for (let i = 0; i < sentenceN && sentSource.length; i += 1) {
+        const beat = sentSource[i % sentSource.length];
+        const options = [beat.sentence.ja];
+        shuffle(lines).forEach((other) => {
+            if (other.sentence.ja !== beat.sentence.ja && options.length < 3) {
+                options.push(other.sentence.ja);
+            }
+        });
+        items.push({
+            kind: "sentence",
+            speak: beat.sentence.zh,
+            prompt: "この文の意味はどれ？",
+            options: shuffle(options),
+            answer: beat.sentence.ja,
+            word: (beat.sentence.tokens || []).find((token) => token.pinyin && !SKIP_WORDS.has(token.zh)) || null,
+        });
+    }
+    let pad = 0;
+    while (items.length < TEST_SIZE && lines.length) {
+        const beat = lines[pad % lines.length];
+        pad += 1;
+        items.push({
+            kind: "sentence",
+            speak: beat.sentence.zh,
+            prompt: "この文の意味はどれ？",
+            options: [beat.sentence.ja],
+            answer: beat.sentence.ja,
+            word: null,
+        });
+    }
+    return shuffle(items).slice(0, TEST_SIZE);
+}
+
+function paintTestLead() {
+    const lead = $("test-lead");
+    if (!lead) return;
+    lead.textContent = `いま ${state.testScore} / ${TEST_SIZE}。第一次按的算分。9分才能玩游戏、进入下一轮。`;
+}
+
+function openPractice() {
+    stopTimer();
+    state.practice = buildNineTest();
     state.practiceIndex = 0;
+    state.testScore = 0;
+    paintTestLead();
     renderPractice();
     showScreen("practice");
 }
@@ -1146,34 +1212,80 @@ function renderPractice() {
     const item = state.practice[state.practiceIndex];
     const card = $("practice-card");
     if (!item) {
-        finishLesson();
+        if (state.testScore >= TEST_SIZE) {
+            finishLesson();
+            return;
+        }
+        renderTestRetry();
         return;
     }
-    card.innerHTML = `<p class="practice-q">${state.practiceIndex + 1} / ${state.practice.length}</p>
+    paintTestLead();
+    card.innerHTML = `<p class="practice-q">${state.practiceIndex + 1} / ${TEST_SIZE}　·　<span class="test-score">${state.testScore} 点</span></p>
         <button type="button" class="primary-btn big" id="practice-play">▶ 中国語を聞く</button>
-        <p class="lead">${escapeHtml(item.word.ja)} はどれ？</p>
+        <p class="lead">${escapeHtml(item.prompt)}</p>
         <div class="choice-grid" id="practice-choices"></div>`;
-    $("practice-play").addEventListener("click", () => speakChinese(item.word.zh));
-    speakChinese(item.word.zh);
+    $("practice-play").addEventListener("click", () => speakChinese(item.speak));
+    speakChinese(item.speak);
     const grid = $("practice-choices");
     item.options.forEach((opt) => {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "choice-btn";
+        btn.className = "choice-btn" + (String(opt).length > 12 ? " long" : "");
         btn.textContent = opt;
-        btn.addEventListener("click", () => {
-            if (opt === item.answer) {
-                recordWordHit(item.word.zh);
-                state.practiceIndex += 1;
-                renderPractice();
-            } else {
-                recordWordMiss(item.word.zh);
-                btn.classList.add("wrong");
-                speakChinese(item.word.zh);
-            }
-        });
+        btn.addEventListener("click", () => gradeTestChoice(item, opt, btn, grid));
         grid.appendChild(btn);
     });
+}
+
+function gradeTestChoice(item, opt, btn, grid) {
+    if (item.answered) return;
+    item.answered = true;
+    const ok = opt === item.answer;
+    if (ok) {
+        state.testScore += 1;
+        if (item.word) recordWordHit(item.word.zh);
+        btn.classList.add("ok");
+    } else {
+        if (item.word) recordWordMiss(item.word.zh);
+        btn.classList.add("wrong");
+        grid.querySelectorAll(".choice-btn").forEach((choice) => {
+            if (choice.textContent === item.answer) choice.classList.add("ok");
+        });
+        speakChinese(item.speak);
+    }
+    paintTestLead();
+    const q = cardQuery();
+    if (q) q.innerHTML = `${state.practiceIndex + 1} / ${TEST_SIZE}　·　<span class="test-score">${state.testScore} 点</span>`;
+    setTimeout(() => {
+        state.practiceIndex += 1;
+        renderPractice();
+    }, 700);
+}
+
+function cardQuery() {
+    const card = $("practice-card");
+    return card ? card.querySelector(".practice-q") : null;
+}
+
+function renderTestRetry() {
+    const card = $("practice-card");
+    const lead = $("test-lead");
+    if (lead) lead.textContent = "もう一回、耳をすませてみよう。";
+    card.innerHTML = `<p class="practice-q">いまは ${state.testScore} / ${TEST_SIZE}</p>
+        <p class="lead">9点になったら、ゲーム1回と次の一轮。</p>
+        <button type="button" class="primary-btn big" id="retry-test">もう一回テスト</button>
+        <button type="button" class="nav-btn" id="retry-listen">お話をもう一度聞く</button>`;
+    $("retry-test").addEventListener("click", () => openPractice());
+    $("retry-listen").addEventListener("click", () => enterLesson());
+}
+
+function goNextRound() {
+    if (state.day < 30) {
+        openDay(state.day + 1);
+        return;
+    }
+    renderCalendar();
+    showScreen("calendar");
 }
 
 async function finishLesson() {
@@ -1184,13 +1296,15 @@ async function finishLesson() {
     });
     recordStudyDay();
     const praise = pickPraise();
-    $("reward-title").textContent = `${praise.ja} ${state.child.name}`;
-    $("reward-moral").textContent = state.lesson.moral.ja;
+    $("reward-title").textContent = "9分満点！";
+    $("reward-moral").textContent = `${praise.ja}　${state.lesson.moral.ja}`;
     const stickerLine = $("reward-sticker");
     if (stickerLine) {
         stickerLine.hidden = false;
         stickerLine.textContent = `きょうのシール：${stickerFor(state.day)}　シールちょうにはったよ`;
     }
+    const nextBtn = $("next-round-btn");
+    if (nextBtn) nextBtn.textContent = state.day < 30 ? "继续下一轮" : "カレンダーへ";
     showScreen("reward");
     burstConfetti();
     speakChinese(praise.zh);
@@ -1254,9 +1368,17 @@ function renderGame() {
     const item = state.game.items[state.gameIndex];
     if (!item) {
         board.innerHTML = `<p class="stamp">🎉</p><p class="lead">ゲームクリア！</p>
-            <button type="button" class="primary-btn" id="game-done">カレンダーへ</button>`;
-        $("game-done").addEventListener("click", async () => {
+            <button type="button" class="primary-btn big" id="game-next-round">${state.day < 30 ? "继续下一轮" : "カレンダーへ"}</button>
+            <button type="button" class="nav-btn" id="game-done">カレンダーへ</button>`;
+        const afterGame = async () => {
             await saveProgress({ lessonDone: true, gameDone: true });
+        };
+        $("game-next-round").addEventListener("click", async () => {
+            await afterGame();
+            goNextRound();
+        });
+        $("game-done").addEventListener("click", async () => {
+            await afterGame();
             renderCalendar();
             showScreen("calendar");
         });
@@ -1410,6 +1532,7 @@ $("slow-btn").addEventListener("click", async () => {
     if (runId === state.slowRun) markHeard(state.index);
 });
 $("open-game-btn").addEventListener("click", openGame);
+onTap("next-round-btn", goNextRound);
 $("back-calendar-btn").addEventListener("click", () => {
     renderCalendar();
     showScreen("calendar");

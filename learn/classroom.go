@@ -219,7 +219,7 @@ func ApplyProgress(childID string, patch ProgressPatch) (ChildProgress, error) {
 	}
 	if patch.GameDone {
 		if !dayState.LessonDone {
-			return ChildProgress{}, fmt.Errorf("finish today's 15-minute lesson first")
+			return ChildProgress{}, fmt.Errorf("finish today's 9-point test first")
 		}
 		dayState.GameDone = true
 	}

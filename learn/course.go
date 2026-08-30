@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// DayLesson is one 15-minute lesson in the month-long C罗 course.
+// DayLesson is one story round in the month-long C罗 course.
 type DayLesson struct {
 	Day      int    `json:"day"`
 	Week     int    `json:"week"`
@@ -93,8 +93,8 @@ func LoadCourse() Course {
 		ID:    "ronaldo-month",
 		Title: Text{ZH: "C罗成长故事 · 三十天", JA: "Cロ成長ものがたり · 30日"},
 		Summary: Text{
-			ZH: "从小岛上的小孩，到有名的足球运动员。每天十五分钟，一天一段真实的励志故事。",
-			JA: "小さな島の子どもが、有名な選手になる。毎日15分、ほんとうの励ましの物語。",
+			ZH: "从小岛上的小孩，到有名的足球运动员。听完一轮故事，做9分测试。满分就可以玩游戏、进入下一轮。",
+			JA: "小さな島の子どもが、有名な選手になる。一轮のお話のあと9点テスト。満点でゲームと次の一轮。",
 		},
 		Days: days,
 	}

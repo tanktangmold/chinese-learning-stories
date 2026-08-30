@@ -32,11 +32,11 @@
                 <div class="home-copy">
                     <p class="eyebrow">小小中文 · C罗成长故事</p>
                     <h1>今天谁来听故事？</h1>
-                    <p class="lead">选自己的头像，听一句中文，踢进一个小目标。每天15分钟，慢慢喜欢上中文。</p>
+                    <p class="lead">选自己的头像，听完一轮故事，再做9分测试。满分就可以玩游戏、进入下一轮。</p>
                     <div class="home-badges" aria-label="コースの特徴">
                         <span>⚽ 30日</span>
                         <span>🔊 点读</span>
-                        <span>🎮 每天游戏</span>
+                        <span>🎮 9分でゲーム</span>
                     </div>
                 </div>
                 <div class="home-art" aria-hidden="true">
@@ -74,7 +74,7 @@
         <section class="screen" id="screen-calendar" data-screen="calendar">
             <div class="hero-mini">
                 <h1 id="calendar-title">30日のCロ物語</h1>
-                <p class="lead" id="calendar-lead">毎日15分。終わったら、ゲームが1つひらく。</p>
+                <p class="lead" id="calendar-lead">一轮故事 + 9分测试。满分就可以玩游戏、进入下一轮。</p>
                 <button type="button" class="primary-btn big start-day-btn" id="start-day-btn">⚽ 第1天开始</button>
                 <div class="calendar-actions">
                     <button type="button" class="chip-btn album-open" id="album-btn">🏅 シールちょう</button>
@@ -112,9 +112,9 @@
 
         <section class="screen" id="screen-lesson" data-screen="lesson">
             <div class="lesson-top">
-                <div class="timer-card">
-                    <span>きょうの15分</span>
-                    <strong id="timer-label">00:00</strong>
+                <div class="timer-card" id="round-card">
+                    <span>きょうの一轮</span>
+                    <strong id="timer-label">听故事</strong>
                 </div>
                 <div class="style-bar" id="style-bar" role="tablist" aria-label="絵のスタイル"></div>
             </div>
@@ -146,8 +146,8 @@
         </section>
 
         <section class="screen" id="screen-practice" data-screen="practice">
-            <h1>あと少し！</h1>
-            <p class="lead">4問できたら、15分コースクリア。そのあとゲーム。</p>
+            <h1 id="test-title">一轮测试 · 9分满分</h1>
+            <p class="lead" id="test-lead">听一听，选一选。9分才能玩游戏、进入下一轮。</p>
             <div class="practice-card" id="practice-card"></div>
         </section>
 
@@ -155,10 +155,11 @@
             <div class="reward">
                 <div class="confetti" id="confetti" aria-hidden="true"></div>
                 <p class="stamp">⚽</p>
-                <h1 id="reward-title">15分できた！</h1>
+                <h1 id="reward-title">9分満点！</h1>
                 <p class="lead" id="reward-moral"></p>
                 <p class="sticker-earn" id="reward-sticker" hidden></p>
-                <button type="button" class="primary-btn big" id="open-game-btn">ゲームを1つプレイ</button>
+                <button type="button" class="primary-btn big" id="open-game-btn">先玩一次游戏</button>
+                <button type="button" class="primary-btn big" id="next-round-btn">继续下一轮</button>
                 <button type="button" class="nav-btn" id="back-calendar-btn">カレンダーへ</button>
             </div>
         </section>

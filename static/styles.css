@@ -1031,6 +1031,13 @@ html {
 }
 
 .choice-btn.wrong { background: #f4c1bb; }
+.choice-btn.ok { background: #c8e6c9; }
+.choice-btn.long { font-size: 16px; line-height: 1.35; }
+.test-score { color: var(--teal); }
+.reward .primary-btn.big + .primary-btn.big,
+.game-board .primary-btn.big + .nav-btn {
+    margin-top: 10px;
+}
 
 .practice-card, .game-board, .reward {
     background: #fffdf8;

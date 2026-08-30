@@ -1,4 +1,4 @@
-const CACHE = "xiaoxue-tablet-v3";
+const CACHE = "xiaoxue-tablet-v4";
 const CORE = [
     "./",
     "./index.html",

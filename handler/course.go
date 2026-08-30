@@ -123,7 +123,7 @@ func HandleGame(w http.ResponseWriter, r *http.Request) {
 		}
 		state := progress.Days[dayStr]
 		if state == nil || !state.LessonDone {
-			writeJSONError(w, http.StatusForbidden, "finish the 15-minute lesson first")
+			writeJSONError(w, http.StatusForbidden, "finish today's 9-point test first")
 			return
 		}
 	}
