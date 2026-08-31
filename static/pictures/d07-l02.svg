@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 576" role="img" aria-label="C罗住在小岛上。">
+        <rect width="768" height="576" fill="#8ed8ff"/>
+        <rect y="220" width="768" height="200" fill="#ffe27a" opacity=".35"/>
+        <circle cx="640" cy="86" r="40" fill="#ffd34d"/>
+        <ellipse cx="384" cy="530" rx="360" ry="70" fill="#62c95c"/><path d="M0 390 C120 340 220 430 360 380 C500 330 620 420 768 360 V576 H0z" fill="#3db7d4"/>
+        <path d="M0 430 C180 400 300 470 480 420 C620 380 700 450 768 410" fill="none" stroke="#fff" stroke-width="8" opacity=".35"/><g transform="translate(160 400)">
+        <path d="M0 0 v-90" stroke="#6b4a2b" stroke-width="10" stroke-linecap="round"/>
+        <path d="M0 -88 q-50 -10 -60 20M0 -88 q50 -10 60 20M0 -92 q-20 -40 10 -48M0 -92 q20 -40 -4 -50" fill="none" stroke="#2f8a3a" stroke-width="8" stroke-linecap="round"/>
+    </g><g transform="translate(220 400)">
+        <path d="M-45 0 h90 v-70 l-45 -38.5 -45 38.5z" fill="#fffdf2" stroke="#2c2419" stroke-width="6"/>
+        <rect x="-18" y="-52" width="28" height="48" fill="#4aa3ff" stroke="#2c2419" stroke-width="4"/>
+        <rect x="16" y="-70" width="22" height="22" fill="#8ed8ff" stroke="#2c2419" stroke-width="4"/>
+    </g><g transform="translate(460 300) scale(1)">
+        <ellipse cx="0" cy="138" rx="46" ry="10" fill="#2c2419" opacity=".14"/>
+        <path d="M-16 78 l-10 52M16 78 l16 50" stroke="#2c2419" stroke-width="14" stroke-linecap="round"/>
+        <path d="M-32 8 h64 l16 72 h-96z" fill="#ef4f3d" stroke="#2c2419" stroke-width="5"/>
+        <path d="M-28 28 l-18 40M28 28 l22 38" stroke="#ef4f3d" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="0" cy="-18" r="30" fill="#f4c69b" stroke="#2c2419" stroke-width="5"/>
+        <path d="M-28 -28 C-18 -58 22 -62 32 -24 C12 -36 0 -24 -14 -38z" fill="#2b2118"/>
+        <circle cx="-10" cy="-18" r="3.4" fill="#2c2419"/><circle cx="10" cy="-18" r="3.4" fill="#2c2419"/>
+        <path d="M-14 10 Q0 20 14 10" fill="none" stroke="#2c2419" stroke-width="3.5" stroke-linecap="round"/>
+        
+    </g><g transform="translate(600 430) scale(1)">
+        <circle r="26" fill="#fff" stroke="#2c2419" stroke-width="5"/>
+        <path d="M0 -14 L12 -4 L7 12 H-7 L-12 -4z" fill="#2c2419"/>
+        
+    </g>
+        <rect y="500" width="768" height="76" fill="#fffdf2" stroke="#2c2419" stroke-width="5"/>
+        <text x="384" y="548" text-anchor="middle" font-size="30" font-weight="800" fill="#2c2419">C罗住在小岛上。</text>
+    </svg>

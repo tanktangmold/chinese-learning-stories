@@ -1,0 +1,19 @@
+{
+  "name": "小小中文",
+  "short_name": "小小中文",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f6efe2",
+  "theme_color": "#1d7a6f",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

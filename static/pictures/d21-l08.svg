@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 576" role="img" aria-label="每天都要努力。">
+        <rect width="768" height="576" fill="#8ed8ff"/>
+        <rect y="220" width="768" height="200" fill="#ffe27a" opacity=".35"/>
+        <circle cx="640" cy="86" r="40" fill="#ffd34d"/>
+        <ellipse cx="384" cy="530" rx="360" ry="70" fill="#62c95c"/><g transform="translate(280 300) scale(1)">
+        <ellipse cx="0" cy="138" rx="46" ry="10" fill="#2c2419" opacity=".14"/>
+        <path d="M-10 78 l-28 40M14 78 l30 36" stroke="#2c2419" stroke-width="14" stroke-linecap="round"/>
+        <path d="M-32 8 h64 l16 72 h-96z" fill="#ef4f3d" stroke="#2c2419" stroke-width="5"/>
+        <path d="M-24 30 l-28 8M26 28 l26 -8" stroke="#ef4f3d" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="0" cy="-18" r="30" fill="#f4c69b" stroke="#2c2419" stroke-width="5"/>
+        <path d="M-28 -28 C-18 -58 22 -62 32 -24 C12 -36 0 -24 -14 -38z" fill="#2b2118"/>
+        <circle cx="-10" cy="-18" r="3.4" fill="#2c2419"/><circle cx="10" cy="-18" r="3.4" fill="#2c2419"/>
+        <path d="M-12 12 H12" fill="none" stroke="#2c2419" stroke-width="3.5" stroke-linecap="round"/>
+        
+    </g><g transform="translate(520 400) scale(1)">
+        <circle r="26" fill="#fff" stroke="#2c2419" stroke-width="5"/>
+        <path d="M0 -14 L12 -4 L7 12 H-7 L-12 -4z" fill="#2c2419"/>
+        
+    </g>
+        <rect y="500" width="768" height="76" fill="#fffdf2" stroke="#2c2419" stroke-width="5"/>
+        <text x="384" y="548" text-anchor="middle" font-size="30" font-weight="800" fill="#2c2419">每天都要努力。</text>
+    </svg>

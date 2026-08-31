@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 576" role="img" aria-label="梦想很大。">
+        <rect width="768" height="576" fill="#2a1b6b"/>
+            <circle cx="120" cy="80" r="3" fill="#fff"/><circle cx="300" cy="40" r="2" fill="#fff"/>
+            <circle cx="520" cy="70" r="2.5" fill="#fff"/><circle cx="680" cy="110" r="3" fill="#fff"/>
+            <circle cx="600" cy="90" r="34" fill="#f7e48a"/>
+            <ellipse cx="384" cy="530" rx="360" ry="70" fill="#3d2a7a"/><g transform="translate(180 340) scale(1)">
+        <ellipse cx="0" cy="138" rx="46" ry="10" fill="#2c2419" opacity=".14"/>
+        <path d="M-16 78 l-10 52M16 78 l16 50" stroke="#2c2419" stroke-width="14" stroke-linecap="round"/>
+        <path d="M-32 8 h64 l16 72 h-96z" fill="#ef4f3d" stroke="#2c2419" stroke-width="5"/>
+        <path d="M-28 28 l-18 40M28 28 l22 38" stroke="#ef4f3d" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="0" cy="-18" r="30" fill="#f4c69b" stroke="#2c2419" stroke-width="5"/>
+        <path d="M-28 -28 C-18 -58 22 -62 32 -24 C12 -36 0 -24 -14 -38z" fill="#2b2118"/>
+        <circle cx="-10" cy="-18" r="3.4" fill="#2c2419"/><circle cx="10" cy="-18" r="3.4" fill="#2c2419"/>
+        <path d="M0 12 a6 7 0 1 0 .1 0" fill="none" stroke="#2c2419" stroke-width="3.5" stroke-linecap="round"/>
+        
+    </g>
+                <polygon points="500,80 530,170 620,170 548,220 576,310 500,250 424,310 452,220 380,170 470,170" fill="#ffd34d" stroke="#2c2419" stroke-width="5"/>
+                <g transform="translate(620 360) scale(1.4)">
+        <circle r="26" fill="#fff" stroke="#2c2419" stroke-width="5"/>
+        <path d="M0 -14 L12 -4 L7 12 H-7 L-12 -4z" fill="#2c2419"/>
+        
+    </g>
+        <rect y="500" width="768" height="76" fill="#fffdf2" stroke="#2c2419" stroke-width="5"/>
+        <text x="384" y="548" text-anchor="middle" font-size="30" font-weight="800" fill="#2c2419">梦想很大。</text>
+    </svg>
