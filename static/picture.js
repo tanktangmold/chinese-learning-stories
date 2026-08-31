@@ -1,3 +1,156 @@
+const GHIBLI_ALIAS = {
+  "hello": "hello",
+  "portrait": "hello",
+  "nickname": "nickname",
+  "island": "island",
+  "rememberisland": "island",
+  "returnisland": "island",
+  "portugal": "portugal",
+  "tinyhouse": "tinyhouse",
+  "crowd": "crowd",
+  "dream": "dream",
+  "dreampower": "dream",
+  "dreamstart": "dream",
+  "dreambig": "dreambig",
+  "dreamgt": "dreambig",
+  "dreamfear": "dreambig",
+  "youdream": "dreambig",
+  "star": "dreambig",
+  "dadbusy": "dadbusy",
+  "dadclub": "dadbusy",
+  "mom": "mom",
+  "nightmom": "nightmom",
+  "poor": "poor",
+  "love": "love",
+  "lovehome": "love",
+  "lovepower": "love",
+  "momlove": "love",
+  "lovestand": "love",
+  "important": "love",
+  "rememberhome": "love",
+  "helphome": "love",
+  "makehappy": "makehappy",
+  "toddler": "toddler",
+  "firstkick": "toddler",
+  "brothers": "brothers",
+  "oldball": "oldball",
+  "kick": "kick",
+  "happyball": "kick",
+  "ballfriend": "kick",
+  "wantplay": "kick",
+  "happy": "happy",
+  "streetkick": "streetkick",
+  "narrow": "streetkick",
+  "run": "run",
+  "notired": "run",
+  "brave": "run",
+  "nogiveup": "run",
+  "effort": "run",
+  "bodyback": "run",
+  "neighbors": "neighbors",
+  "nightrun": "nightrun",
+  "trainnight": "nightrun",
+  "othershome": "othershome",
+  "alonekick": "othershome",
+  "team": "team",
+  "teamhome": "team",
+  "bigteam": "team",
+  "smallboy": "smallboy",
+  "serious": "serious",
+  "coachsee": "coach",
+  "coachfast": "coach",
+  "coachlike": "coach",
+  "coacheffort": "coach",
+  "trust": "coach",
+  "trusteffort": "coach",
+  "coachslow": "coach",
+  "train": "train",
+  "last": "last",
+  "first": "first",
+  "sweat": "sweat",
+  "sweatpower": "sweat",
+  "seesweat": "sweat",
+  "sweatwords": "sweat",
+  "habit": "habit",
+  "review": "review",
+  "littleday": "review",
+  "youslow": "review",
+  "fifteen": "review",
+  "tomorrow": "review",
+  "youstart": "review",
+  "age10": "age10",
+  "progress": "progress",
+  "betterball": "progress",
+  "dribble": "dribble",
+  "age12": "age12",
+  "goodbye": "goodbye",
+  "goodbyehard": "goodbye",
+  "golisbon": "golisbon",
+  "lisbon": "lisbon",
+  "homesick": "homesick",
+  "homesicksad": "homesick",
+  "wanthome": "homesick",
+  "sad": "homesick",
+  "cry": "cry",
+  "tease": "tease",
+  "crybaby": "tease",
+  "heard": "tease",
+  "stayed": "stayed",
+  "wordpower": "wordpower",
+  "courage": "wordpower",
+  "effortanswer": "wordpower",
+  "power": "wordpower",
+  "school": "school",
+  "phone": "phone",
+  "sayeffort": "phone",
+  "thin": "thin",
+  "twofeet": "twofeet",
+  "nightball": "nightball",
+  "shoot": "shoot",
+  "age15": "age15",
+  "heartbeat": "heartbeat",
+  "doctor": "doctor",
+  "surgerytalk": "doctor",
+  "scared": "scared",
+  "surgery": "surgery",
+  "surgerysmall": "surgery",
+  "standup": "standup",
+  "heartstrong": "standup",
+  "heartpast": "standup",
+  "talent": "talent",
+  "match": "match",
+  "goal": "goal",
+  "islandwin": "goal",
+  "wantwin": "goal",
+  "clap": "clap",
+  "effortlight": "effortlight",
+  "strongcr7": "strongcr7",
+  "ready": "ready",
+  "nextstep": "ready",
+  "age18": "age18",
+  "england": "england",
+  "united": "united",
+  "newcountry": "england",
+  "language": "language",
+  "study": "language",
+  "chinese": "language",
+  "newstory": "newstory",
+  "storygo": "newstory",
+  "storylong": "newstory",
+  "efforthelp": "helpkids",
+  "newhome": "newhome",
+  "famous": "famous",
+  "helpkids": "helpkids",
+  "youcan": "helpkids",
+  "younogiveup": "wordpower",
+  "rememberstart": "timeline",
+  "timeline": "timeline",
+  "effortmost": "effortmost",
+  "notenough": "effortmost",
+  "day30": "day30",
+  "islandworld": "islandworld"
+};
+
 // Built-in, sentence-matched pictures. Each line has a baked SVG in pictures/.
 // This file is also the generator: `node scripts/bake-pictures.js`.
 
@@ -894,6 +1047,12 @@ function pictureFileName(day, line) {
     return `pictures/d${d}-l${n}.svg`;
 }
 
+function picturePhotoName(zh) {
+    const shot = shotFor(zh);
+    const alias = (GHIBLI_ALIAS && GHIBLI_ALIAS[shot]) || shot;
+    return `pictures/ghibli/${alias}.webp`;
+}
+
 function buildSentencePicture(zh, scene, style) {
     const p = picturePalette(style || "comic");
     const shot = shotFor(zh);
@@ -905,25 +1064,31 @@ function buildSentencePicture(zh, scene, style) {
 
 function paintSentencePicture(box, zh, scene, style, day, line) {
     if (!box) return;
-    const file = day ? pictureFileName(day, line) : "";
-    if (file) {
-        box.innerHTML = `<img class="baked-art style-${esc(style || "comic")}" alt="${esc(zh)}" src="${file}">`;
-        const img = box.querySelector("img");
-        if (img) {
-            img.onerror = function () {
-                box.innerHTML = buildSentencePicture(zh, scene, style);
-            };
-        }
-        return;
+    const photo = picturePhotoName(zh);
+    box.innerHTML = `<img class="baked-art ghibli-art style-${esc(style || "comic")}" alt="${esc(zh)}" src="${photo}">`;
+    const img = box.querySelector("img");
+    if (img) {
+        img.onerror = function () {
+            const svgFile = day ? pictureFileName(day, line) : "";
+            if (svgFile) {
+                img.onerror = function () {
+                    box.innerHTML = buildSentencePicture(zh, scene, style);
+                };
+                img.src = svgFile;
+                return;
+            }
+            box.innerHTML = buildSentencePicture(zh, scene, style);
+        };
     }
-    box.innerHTML = buildSentencePicture(zh, scene, style);
 }
 
 if (typeof module !== "undefined" && module.exports) {
     module.exports = {
         buildSentencePicture,
         pictureFileName,
+        picturePhotoName,
         shotFor,
         EXACT_SHOT,
+        GHIBLI_ALIAS,
     };
 }

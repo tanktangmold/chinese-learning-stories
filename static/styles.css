@@ -511,8 +511,9 @@ button, a, input {
     height: 100%;
     object-fit: cover;
 }
-.baked-art.style-picturebook { filter: saturate(1.12) sepia(.18); }
-.baked-art.style-realistic { filter: saturate(.72) contrast(1.06); }
+.baked-art.ghibli-art { filter: none; }
+.baked-art.style-picturebook { filter: saturate(1.08) sepia(.12) contrast(.98); }
+.baked-art.style-realistic { filter: saturate(.82) contrast(1.04); }
 
 .picture-frame figcaption {
     padding: 8px 12px 12px;
