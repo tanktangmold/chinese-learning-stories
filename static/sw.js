@@ -1,4 +1,4 @@
-const CACHE = "xiaoxue-tablet-v7";
+const CACHE = "xiaoxue-tablet-v8";
 const CORE = [
     "./",
     "./index.html",
@@ -13,6 +13,10 @@ const CORE = [
     "./data/games.json",
     "./data/voices.json",
 ];
+const DEDICATED = [1, 2, 3, 4, 5, 6, 7, 8].flatMap((n) => {
+    const k = String(n).padStart(2, "0");
+    return [`./pictures/ghibli/d03-l${k}.webp`, `./pictures/ghibli/d04-l${k}.webp`];
+});
 const IMAGES = [
     "academy", "book", "daily", "firstkick", "intro", "island",
     "park", "preview", "puppy", "star", "starry",
@@ -20,7 +24,7 @@ const IMAGES = [
 
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open(CACHE).then((cache) => cache.addAll(CORE.concat(IMAGES))).then(() => self.skipWaiting())
+        caches.open(CACHE).then((cache) => cache.addAll(CORE.concat(IMAGES, DEDICATED))).then(() => self.skipWaiting())
     );
 });
 
