@@ -1057,6 +1057,42 @@ html {
     text-align: center;
 }
 
+.mini-canvas {
+    display: block;
+    width: 100%;
+    max-width: 640px;
+    margin: 8px auto 0;
+    background: #8ecae6;
+    border: 3px solid var(--ink);
+    border-radius: 16px;
+    touch-action: none;
+}
+.game-score {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+}
+.dpad {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+.dpad-mid {
+    display: flex;
+    gap: 48px;
+}
+.dpad button {
+    width: 76px;
+    height: 76px;
+    border: 3px solid var(--ink);
+    border-radius: 18px;
+    background: var(--sun);
+    font-size: 28px;
+    font-weight: 800;
+    touch-action: manipulation;
+}
+
 .stamp { font-size: 64px; margin: 0; }
 .game-prompt { font-size: 28px; font-weight: 800; }
 .build-line {

@@ -17,7 +17,7 @@ https://raw.githack.com/tanktangmold/chinese-learning-stories/cursor/import-xiao
 
 1. 选头像，输入名字，点「つくる」  
 2. 点第 1 天听完一轮故事  
-3. 做 9 分测试；满分后可以玩一次游戏，再进入下一轮  
+3. 做 9 分测试；满分后可以玩一次小游戏（飞机或贪吃蛇），再进入下一轮  
 4. 家长想看进度：日历页点「👪 保護者メモ」  
 
 每个孩子进度分开。换人回首页点头像即可。

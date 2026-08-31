@@ -169,6 +169,7 @@ function showScreen(name) {
         stopTimer();
         stopSpeak();
     }
+    if (name !== "game" && typeof stopMiniGame === "function") stopMiniGame();
 }
 
 function loadClassroom() {
@@ -1254,107 +1255,35 @@ async function saveProgress(extra) {
     }
 }
 
-async function openGame() {
-    try {
-        state.game = await api(`/api/game/${state.day}?child=${encodeURIComponent(state.child.id)}`);
-    } catch (err) {
-        $("game-hint").textContent = err.message;
-        showScreen("game");
-        return;
-    }
-    state.gameIndex = 0;
-    state.buildPicked = [];
-    $("game-title").textContent = state.game.title.ja;
-    $("game-hint").textContent = state.game.hint.ja;
-    renderGame();
+function openGame() {
+    const kind = typeof miniGameKind === "function" ? miniGameKind(state.day) : "plane";
+    const meta = {
+        plane: { title: "ひこうきゲーム", hint: "画面をおして飛ぶ。星を5こ取ったらクリア。" },
+        snake: { title: "ヘビゲーム", hint: "ボタンで動かす。サッカーボールを5こ食べたらクリア。" },
+    };
+    const info = meta[kind] || meta.plane;
+    $("game-title").textContent = info.title;
+    $("game-hint").textContent = info.hint;
     showScreen("game");
+    startMiniGame(kind, showGameClear);
 }
 
-function renderGame() {
+function showGameClear() {
     const board = $("game-board");
-    const item = state.game.items[state.gameIndex];
-    if (!item) {
-        board.innerHTML = `<p class="stamp">🎉</p><p class="lead">ゲームクリア！</p>
-            <button type="button" class="primary-btn big" id="game-next-round">${state.day < 30 ? "继续下一轮" : "カレンダーへ"}</button>
-            <button type="button" class="nav-btn" id="game-done">カレンダーへ</button>`;
-        const afterGame = async () => {
-            await saveProgress({ lessonDone: true, gameDone: true });
-        };
-        $("game-next-round").addEventListener("click", async () => {
-            await afterGame();
-            goNextRound();
-        });
-        $("game-done").addEventListener("click", async () => {
-            await afterGame();
-            renderCalendar();
-            showScreen("calendar");
-        });
-        return;
-    }
-    if (state.game.kind === "build") {
-        renderBuild(board, item);
-        return;
-    }
-    board.innerHTML = `<p class="practice-q">${state.gameIndex + 1} / ${state.game.items.length}</p>
-        <p class="game-prompt">${escapeHtml(item.prompt.zh)}</p>
-        <p class="muted">${escapeHtml(item.prompt.ja)}</p>
-        <button type="button" class="nav-btn" id="game-play">▶ 聞く</button>
-        <div class="choice-grid" id="game-choices"></div>`;
-    $("game-play").addEventListener("click", () => speakChinese(item.audioZh || item.prompt.zh));
-    speakChinese(item.audioZh || item.prompt.zh);
-    const grid = $("game-choices");
-    item.options.forEach((opt, i) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "choice-btn";
-        btn.textContent = opt;
-        btn.addEventListener("click", () => {
-            const isWordQuiz = state.game.kind === "listen-pick";
-            if (i === item.answer) {
-                if (isWordQuiz) recordWordHit(item.audioZh);
-                state.gameIndex += 1;
-                renderGame();
-            } else {
-                if (isWordQuiz) recordWordMiss(item.audioZh);
-                btn.classList.add("wrong");
-                speakChinese(item.audioZh || item.prompt.zh);
-            }
-        });
-        grid.appendChild(btn);
+    board.innerHTML = `<p class="stamp">🎉</p><p class="lead">ゲームクリア！</p>
+        <button type="button" class="primary-btn big" id="game-next-round">${state.day < 30 ? "继续下一轮" : "カレンダーへ"}</button>
+        <button type="button" class="nav-btn" id="game-done">カレンダーへ</button>`;
+    const afterGame = async () => {
+        await saveProgress({ lessonDone: true, gameDone: true });
+    };
+    $("game-next-round").addEventListener("click", async () => {
+        await afterGame();
+        goNextRound();
     });
-}
-
-function renderBuild(board, item) {
-    const picked = state.buildPicked;
-    const target = (item.tokens || []).map((t) => t.zh).join("");
-    board.innerHTML = `<p class="practice-q">${state.gameIndex + 1} / ${state.game.items.length}</p>
-        <button type="button" class="nav-btn" id="game-play">▶ 文を聞く</button>
-        <p class="build-line" id="build-line">${picked.join(" ") || "……"}</p>
-        <div class="choice-grid" id="game-choices"></div>`;
-    $("game-play").addEventListener("click", () => speakChinese(item.audioZh));
-    const grid = $("game-choices");
-    item.options.forEach((opt) => {
-        const used = picked.filter((p) => p === opt).length;
-        const total = item.options.filter((p) => p === opt).length;
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "choice-btn";
-        btn.textContent = opt;
-        if (used >= total) btn.disabled = true;
-        btn.addEventListener("click", () => {
-            state.buildPicked.push(opt);
-            if (state.buildPicked.join("") === target) {
-                state.gameIndex += 1;
-                state.buildPicked = [];
-                renderGame();
-                return;
-            }
-            if (state.buildPicked.join("").length >= target.length && state.buildPicked.join("") !== target) {
-                state.buildPicked = [];
-            }
-            renderBuild(board, item);
-        });
-        grid.appendChild(btn);
+    $("game-done").addEventListener("click", async () => {
+        await afterGame();
+        renderCalendar();
+        showScreen("calendar");
     });
 }
 

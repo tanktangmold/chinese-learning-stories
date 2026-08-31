@@ -1,9 +1,10 @@
-const CACHE = "xiaoxue-tablet-v6";
+const CACHE = "xiaoxue-tablet-v7";
 const CORE = [
     "./",
     "./index.html",
     "./app.js",
     "./picture.js",
+    "./games.js",
     "./styles.css",
     "./manifest.json",
     "./favicon.svg",

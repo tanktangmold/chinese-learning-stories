@@ -10,7 +10,7 @@ const GHIBLI_ALIAS = {
   "crowd": "crowd",
   "dream": "dream",
   "dreampower": "dream",
-  "dreamstart": "dream",
+  "dreamstart": "dreamstart",
   "dreambig": "dreambig",
   "dreamgt": "dreambig",
   "dreamfear": "dreambig",
@@ -31,18 +31,18 @@ const GHIBLI_ALIAS = {
   "helphome": "love",
   "makehappy": "makehappy",
   "toddler": "toddler",
-  "firstkick": "toddler",
+  "firstkick": "firstkick",
   "brothers": "brothers",
   "oldball": "oldball",
   "kick": "kick",
-  "happyball": "kick",
+  "happyball": "happyball",
   "ballfriend": "kick",
   "wantplay": "kick",
   "happy": "happy",
   "streetkick": "streetkick",
-  "narrow": "streetkick",
+  "narrow": "narrow",
   "run": "run",
-  "notired": "run",
+  "notired": "notired",
   "brave": "run",
   "nogiveup": "run",
   "effort": "run",
@@ -51,7 +51,7 @@ const GHIBLI_ALIAS = {
   "nightrun": "nightrun",
   "trainnight": "nightrun",
   "othershome": "othershome",
-  "alonekick": "othershome",
+  "alonekick": "alonekick",
   "team": "team",
   "teamhome": "team",
   "bigteam": "team",
@@ -1047,6 +1047,15 @@ function pictureFileName(day, line) {
     return `pictures/d${d}-l${n}.svg`;
 }
 
+const DEDICATED_PHOTO_DAYS = { 3: true, 4: true };
+
+function dedicatedPhotoName(day, line) {
+    if (!DEDICATED_PHOTO_DAYS[day]) return "";
+    const d = String(day).padStart(2, "0");
+    const n = String(Number(line) + 1).padStart(2, "0");
+    return `pictures/ghibli/d${d}-l${n}.webp`;
+}
+
 function picturePhotoName(zh) {
     const shot = shotFor(zh);
     const alias = (GHIBLI_ALIAS && GHIBLI_ALIAS[shot]) || shot;
@@ -1064,16 +1073,21 @@ function buildSentencePicture(zh, scene, style) {
 
 function paintSentencePicture(box, zh, scene, style, day, line) {
     if (!box) return;
+    const dedicated = dedicatedPhotoName(day, line);
     const photo = picturePhotoName(zh);
-    box.innerHTML = `<img class="baked-art ghibli-art style-${esc(style || "comic")}" alt="${esc(zh)}" src="${photo}">`;
+    const src = dedicated || photo;
+    box.innerHTML = `<img class="baked-art ghibli-art style-${esc(style || "comic")}" alt="${esc(zh)}" src="${src}">`;
     const img = box.querySelector("img");
     if (img) {
         img.onerror = function () {
+            if (dedicated && !img.dataset.triedAlias) {
+                img.dataset.triedAlias = "1";
+                img.src = photo;
+                return;
+            }
             const svgFile = day ? pictureFileName(day, line) : "";
-            if (svgFile) {
-                img.onerror = function () {
-                    box.innerHTML = buildSentencePicture(zh, scene, style);
-                };
+            if (svgFile && !img.dataset.triedSvg) {
+                img.dataset.triedSvg = "1";
                 img.src = svgFile;
                 return;
             }
@@ -1086,6 +1100,7 @@ if (typeof module !== "undefined" && module.exports) {
     module.exports = {
         buildSentencePicture,
         pictureFileName,
+        dedicatedPhotoName,
         picturePhotoName,
         shotFor,
         EXACT_SHOT,
